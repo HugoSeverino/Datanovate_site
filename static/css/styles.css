@@ -6,7 +6,7 @@
     width: 100vw;
     height: 100vh;
     z-index: -1; /* Derrière les autres éléments de la page */
-    background-color: #374473; /* Couleur de fond par défaut */
+    background-color: #0a1f44; /* Couleur de fond par défaut */
 }
 
 /* Style de base pour le contenu de la page */
