@@ -4,7 +4,7 @@ particlesJS("particles-js", {
         color: { value: ["#1e3a8a", "#3b82f6", "#94a3b8"] }, // Couleurs des particules : bleu foncé, bleu clair, gris bleuté
         shape: { type: "circle" },
         opacity: { value: 0.5, random: true },
-        size: { value: 5, random: true },
+        size: { value: 1, random: true },
         line_linked: { 
             enable: true, 
             distance: 150, // Distance de connexion des particules
