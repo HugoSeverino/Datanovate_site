@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datanovate.fr</title>
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <div class="fullscreen-container">
-        <div class="loader10"></div>
-        <p>Site en construction</p>
-    </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Animation de Particules en Fond</title>
     
-
+        <!-- Lien vers le fichier CSS -->
+        <link rel="stylesheet" href="static/css/styles.css">
+    
+        <!-- Inclusion de la bibliothèque Particles.js depuis un CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    </head>
+    <body>
+        <!-- Conteneur de fond pour les particules -->
+        <div class="background" id="particles-js"></div>
+    
+        <!-- Contenu principal de la page, devant le fond animé -->
+        <div class="content">
+            <h1>Site en Construction</h1>
+            <p>Revenez bientôt pour découvrir notre nouveau site !</p>
+        </div>
+    
+        <!-- Lien vers le fichier JavaScript -->
+        <script src="static/js/particles-config.js"></script>
 </body>
 </html>

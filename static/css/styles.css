@@ -1,0 +1,29 @@
+/* Style pour couvrir tout l'écran avec les particules */
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Derrière les autres éléments de la page */
+    background-color: #374473; /* Couleur de fond par défaut */
+}
+
+/* Style de base pour le contenu de la page */
+.content {
+    position: relative;
+    z-index: 1; /* Devant le fond animé */
+    color: #fff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 20vh;
+}
+
+.content h1 {
+    font-size: 2.5em;
+    margin: 0;
+}
+
+.content p {
+    font-size: 1.2em;
+}
