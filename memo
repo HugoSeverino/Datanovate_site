@@ -1,0 +1,57 @@
+### Mémo : Gestion de l’Application Flask avec Gunicorn, Nginx et Webhook GitHub
+
+#### 1. Démarrer, Redémarrer et Arrêter les Services
+- **Démarrer Gunicorn** : `sudo systemctl start datanovate_flask`
+- **Redémarrer Gunicorn** : `sudo systemctl restart datanovate_flask`
+- **Arrêter Gunicorn** : `sudo systemctl stop datanovate_flask`
+- **Vérifier le statut de Gunicorn** : `sudo systemctl status datanovate_flask`
+
+#### 2. Gestion de Nginx
+- **Démarrer Nginx** : `sudo systemctl start nginx`
+- **Redémarrer Nginx** : `sudo systemctl restart nginx`
+- **Vérifier le statut de Nginx** : `sudo systemctl status nginx`
+
+#### 3. Consulter les Journaux
+- **Journaux Nginx** : `sudo tail -f /var/log/nginx/error.log`
+- **Journaux Gunicorn** : `sudo journalctl -u datanovate_flask -n 50`
+
+#### 4. Vérification et Gestion des Processus
+- **Lister les processus Gunicorn** : `ps aux | grep gunicorn`
+- **Terminer un Processus Gunicorn** : `sudo kill PID`
+
+#### 5. Configuration des Fichiers et Permissions Importantes
+
+- **Fichier de Configuration Nginx** : `/etc/nginx/sites-available/datanovate` (Lien symbolique dans `/etc/nginx/sites-enabled/`)
+  
+  ```nginx
+  server {
+      listen 80;
+      server_name datanovate.fr www.datanovate.fr;
+      return 301 https://$host$request_uri;
+  }
+
+  server {
+      listen 443 ssl;
+      server_name datanovate.fr www.datanovate.fr;
+
+      ssl_certificate /etc/letsencrypt/live/datanovate.fr/fullchain.pem;
+      ssl_certificate_key /etc/letsencrypt/live/datanovate.fr/privkey.pem;
+      include /etc/letsencrypt/options-ssl-nginx.conf;
+      ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+      location / {
+          proxy_pass http://127.0.0.1:8000;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+      }
+
+      location /update-server {
+          proxy_pass http://127.0.0.1:8000;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+      }
+  }

@@ -2,11 +2,11 @@ from flask import Flask,request, render_template
 import subprocess
 import hmac
 import hashlib
+from secret import GITHUB_TOKEN
 
 app = Flask(__name__)
 
-# Ton secret pour vérifier les requêtes (doit être identique à celui défini dans GitHub)
-SECRET_TOKEN = "ton_secret_token"
+
 
 def verify_signature(request):
     # Obtenir la signature de l’en-tête
@@ -16,7 +16,7 @@ def verify_signature(request):
         return False
 
     # Calculer le hash HMAC de la charge utile
-    mac = hmac.new(SECRET_TOKEN.encode(), msg=request.data, digestmod=hashlib.sha256)
+    mac = hmac.new(GITHUB_TOKEN.encode(), msg=request.data, digestmod=hashlib.sha256)
     expected_signature = 'sha256=' + mac.hexdigest()
 
     # Comparer les signatures pour vérifier l'authenticité
