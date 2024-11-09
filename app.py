@@ -24,7 +24,7 @@ def webhook():
 
     # Si la requête est valide, lance un git pull
     try:
-        subprocess.run(['git', 'pull'], cwd='/root/Datanovate_site')
+        subprocess.run(['/usr/bin/git', 'pull'], cwd='/root/Datanovate_site')
         # Redémarrer le service
         subprocess.run(['sudo', 'systemctl', 'restart', 'datanovate_flask'])  # Remplace 'my_flask_app' par ton nom de service
         return 'Mise à jour effectuée et service redémarré', 200
