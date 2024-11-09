@@ -5,20 +5,33 @@ import hashlib
 
 app = Flask(__name__)
 
-# Ton secret, pour vérifier les requêtes (même valeur que celle définie dans le webhook)
+# Ton secret pour vérifier les requêtes (doit être identique à celui défini dans GitHub)
 SECRET_TOKEN = "ton_secret_token"
 
 def verify_signature(request):
-    signature = 'sha256=' + hmac.new(
-        key=SECRET_TOKEN.encode(),
-        msg=request.data,
-        digestmod=hashlib.sha256
-    ).hexdigest()
-    return hmac.compare_digest(signature, request.headers.get('X-Hub-Signature-256'))
+    # Obtenir la signature de l’en-tête
+    signature = request.headers.get('X-Hub-Signature-256')
+    if signature is None:
+        print("Erreur : Signature absente dans l'en-tête")
+        return False
+
+    # Calculer le hash HMAC de la charge utile
+    mac = hmac.new(SECRET_TOKEN.encode(), msg=request.data, digestmod=hashlib.sha256)
+    expected_signature = 'sha256=' + mac.hexdigest()
+
+    # Comparer les signatures pour vérifier l'authenticité
+    return hmac.compare_digest(expected_signature, signature)
+
+
 
 @app.route('/update-server', methods=['POST'])
 def webhook():
+    # Vérifie la signature pour sécuriser l'accès
+    if not verify_signature(request):
+        return 'Accès non autorisé', 403
+
     try:
+        # Exécute `git pull` si la vérification est réussie
         result_git = subprocess.run(
             ['/usr/bin/git', 'pull'], 
             cwd='/root/Datanovate_site', 
@@ -27,8 +40,8 @@ def webhook():
         print("Résultat de git pull :", result_git.stdout)
         if result_git.returncode != 0:
             return f"Erreur lors de git pull : {result_git.stderr}", 500
-        
-        # Appelle le script de redémarrage en arrière-plan
+
+        # Redémarre l'application avec un script différé
         subprocess.Popen(['/root/Datanovate_site/restart_service.sh'])
         return 'Mise à jour effectuée et service redémarré', 200
     except Exception as e:
