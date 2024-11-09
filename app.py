@@ -34,7 +34,7 @@ def webhook():
         
         # Exécute systemctl restart et capture les sorties et erreurs
         result_systemctl = subprocess.run(
-            ['sudo', 'systemctl', 'restart', 'datanovate_flask'], 
+            ['/usr/bin/sudo', 'systemctl', 'restart', 'datanovate_flask'], 
             capture_output=True, text=True
         )
         print("Résultat de systemctl restart :", result_systemctl.stdout)
