@@ -18,20 +18,38 @@ def verify_signature(request):
 
 @app.route('/update-server', methods=['POST'])
 def webhook():
-    return "Webhook reçu avec succès", 200
-    # Vérifie la signature pour sécuriser l'accès
-    #if not verify_signature(request):
-    #    return 'Accès non autorisé', 403
+    try:
+        # Exécute git pull et capture les sorties et erreurs
+        result_git = subprocess.run(
+            ['/usr/bin/git', 'pull'], 
+            cwd='/root/Datanovate_site', 
+            capture_output=True, text=True
+        )
+        print("Résultat de git pull :", result_git.stdout)
+        print("Erreur de git pull :", result_git.stderr)
 
-    # Si la requête est valide, lance un git pull
-   # try:
-   #     subprocess.run(['/usr/bin/git', 'pull'], cwd='/root/Datanovate_site')
-   #     # Redémarrer le service
-   #     subprocess.run(['sudo', 'systemctl', 'restart', 'datanovate_flask'])  # Remplace 'my_flask_app' par ton nom de service
-    #    return 'Mise à jour effectuée et service redémarré', 200
-    #except Exception as e:
-    #    print(f"Erreur : {e}")
-    #    return 'Erreur lors de la mise à jour', 500
+        # Vérifie si git pull a rencontré une erreur
+        if result_git.returncode != 0:
+            return f"Erreur lors de git pull : {result_git.stderr}", 500
+        
+        # Exécute systemctl restart et capture les sorties et erreurs
+        result_systemctl = subprocess.run(
+            ['sudo', 'systemctl', 'restart', 'datanovate_flask'], 
+            capture_output=True, text=True
+        )
+        print("Résultat de systemctl restart :", result_systemctl.stdout)
+        print("Erreur de systemctl restart :", result_systemctl.stderr)
+
+        # Vérifie si systemctl restart a rencontré une erreur
+        if result_systemctl.returncode != 0:
+            return f"Erreur lors de systemctl restart : {result_systemctl.stderr}", 500
+
+        return 'Mise à jour effectuée et service redémarré', 200
+    
+    except Exception as e:
+            print(f"Erreur générale lors de la mise à jour : {e}")
+            return f"Erreur lors de la mise à jour : {e}", 500
+    
 @app.route('/')
 def home():
     return render_template('index.html')
