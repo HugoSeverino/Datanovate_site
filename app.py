@@ -26,7 +26,7 @@ def webhook():
     try:
         subprocess.run(['git', 'pull'], cwd='/root/Datanovate_site')
         # Redémarrer le service
-        subprocess.run(['sudo', 'systemctl', 'restart', 'my_flask_app'])  # Remplace 'my_flask_app' par ton nom de service
+        subprocess.run(['sudo', 'systemctl', 'restart', 'datanovate_flask'])  # Remplace 'my_flask_app' par ton nom de service
         return 'Mise à jour effectuée et service redémarré', 200
     except Exception as e:
         print(f"Erreur : {e}")
