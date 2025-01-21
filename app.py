@@ -52,7 +52,7 @@ def webhook():
 def home():
     return render_template('index.html')
 
-@app.route('/ia_reconnaissance_chiffre')
+@app.route('/ia_reconnaissance_chiffre/')
 def ia():
     return render_template('ia_reconnaissance_chiffre.html')
 
