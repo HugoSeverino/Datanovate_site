@@ -6,7 +6,7 @@
         <title>Datanovate</title>
     
         <!-- Lien vers le fichier CSS -->
-        <link rel="stylesheet" href="static/css/styles.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     
         <!-- Inclusion de la bibliothèque Particles.js depuis un CDN -->
         <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
@@ -14,13 +14,10 @@
     <body>
         <!-- Conteneur de fond pour les particules -->
         <div class="background" id="particles-js"></div>
-    
-        <!-- Contenu principal de la page, devant le fond animé -->
-        <div class="">
-            <a href="/"><button type="button" class="styled" >Accueil</button></a>
-
-        </div>
+        {% include 'general/header.html' %}
+        {% block content %}{%endblock%}
+        {% include 'general/footer.html' %}
         <!-- Lien vers le fichier JavaScript -->
-        <script src="static/js/particles-config.js"></script>
-</body>
+        <script src="{{ url_for('static', filename='js/particles-config.js') }}"></script>
+    </body>
 </html>

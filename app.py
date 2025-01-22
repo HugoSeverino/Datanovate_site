@@ -50,11 +50,15 @@ def webhook():
     
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('pages/index.html')
 
 @app.route('/ia_reconnaissance_chiffre/')
 def ia():
-    return render_template('ia_reconnaissance_chiffre.html')
+    return render_template('pages/ia_reconnaissance_chiffre.html')
+
+@app.route('/page_1/')
+def page_1():
+    return render_template('pages/page_1.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
