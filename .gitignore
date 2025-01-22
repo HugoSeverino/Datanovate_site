@@ -4,3 +4,4 @@ _pycache_/
 venv/
 env_portable/
 .venv/
+venv_datanovate/
