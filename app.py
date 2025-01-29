@@ -1,4 +1,4 @@
-from flask import Flask,request, render_template, jsonify
+from flask import Flask,request, render_template, jsonify, send_from_directory
 import subprocess
 import hmac
 import hashlib
@@ -7,6 +7,7 @@ import base64
 from io import BytesIO
 from PIL import Image
 import numpy as np
+import os
 
 app = Flask(__name__)
 
@@ -52,6 +53,10 @@ def webhook():
         print(f"Erreur lors de la mise à jour : {e}")
         return f"Erreur lors de la mise à jour : {e}", 500
     
+#@app.route('/favicon.ico')
+#def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                             'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route('/')
 def home():
@@ -64,17 +69,25 @@ def save_drawing():
     # Décoder l'image base64
     image_data = base64.b64decode(encoded)
     img = Image.open(BytesIO(image_data))
+    img.save("static/img/chiffre.png")
     img = img.resize((28,28), Image.NEAREST)
-    
+    img = img.convert("1")
+    img.save("static/img/chiffre_norm.png")
     np_img = np.array(img)
     # IA
-    return jsonify({'message': 'exemple'})
+    return jsonify({'message': '/static/img/chiffre.png'})
 
 @app.route('/<page>/')
 def render_page(page):
     return render_template('general.html', current_page=page)
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('general.html', current_page='erreur', error=404), 404
 
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('general.html', current_page='erreur', error=500), 500
 
 
 if __name__ == '__main__':
