@@ -1,9 +1,89 @@
-{% extends 'general.html' %}
+<div class="content flex flex-col justify-between items-center p-4 space-y-4">
+    <a href="/"><button type="button" class="styled px-4 py-1 bg-blue-500 text-white rounded-md">Accueil</button></a>
+    
+    <h2 class="text-lg font-semibold">Dessinez un chiffre</h2>
+    <canvas id="canvas" width="280" height="280" class="border border-black cursor-crosshair"></canvas>
 
-{% block content %}
-        
-<div class="content">
-    <a href="/"><button type="button" class="styled" >Accueil</button></a>
+    <div class="flex flex-row justify-center space-x-4">
+        <button onclick="clearCanvas()" type="button" class="px-4 py-2 bg-red-500 text-white rounded-md">Effacer</button>
+        <button onclick="sendDrawing()" type="button" class="px-4 py-2 bg-green-500 text-white rounded-md">Valider</button>
+    </div>
+    
+    <div id="message" class="text-center text-2xl text-white font-semibold"></div>
 </div>
 
-{% endblock%}
+<script>
+    let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext("2d");
+    let drawing = false;
+
+    ctx.fillStyle = "rgba(255, 255, 255, 1)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height); // Fond blanc
+
+    canvas.addEventListener("mousedown", () => {
+                lastX = event.offsetX;
+                lastY = event.offsetY; 
+                drawing = true;});
+    canvas.addEventListener("mouseup", () => drawing = false);
+    canvas.addEventListener("mousemove", draw);
+
+    let lastX = 0;
+    let lastY = 0;
+
+    function draw(event) {
+        if (!drawing) return;
+
+        ctx.fillStyle = "black";  // Couleur des points
+        const pointSize = 5;  // Taille des points
+    
+        // Si c'est le premier mouvement, on initialise les coordonnées
+        if (lastX === 0 && lastY === 0) {
+            lastX = event.offsetX;
+            lastY = event.offsetY;
+        }
+    
+        // Calculer les différences entre les positions pour tracer plusieurs points
+        const dx = event.offsetX - lastX;
+        const dy = event.offsetY - lastY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        // Nombre de points à dessiner entre lastX, lastY et la position actuelle
+        const pointsCount = Math.floor(distance / 2); // Ajuster la valeur pour avoir plus ou moins de points
+    
+        // Dessiner plusieurs points pour créer un effet de trait
+        for (let i = 0; i < pointsCount; i++) {
+            const x = lastX + (dx * i) / pointsCount;
+            const y = lastY + (dy * i) / pointsCount;
+    
+            ctx.beginPath();
+            ctx.arc(x, y, pointSize, 0, Math.PI * 2);  // Dessiner un point
+            ctx.fill();
+        }
+    
+        // Mettre à jour les coordonnées pour le prochain mouvement
+        lastX = event.offsetX;
+        lastY = event.offsetY;
+    }
+
+    function clearCanvas() {
+        ctx.fillStyle = "rgba(255, 255, 255, 1)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function sendDrawing() {
+        let dataURL = canvas.toDataURL("image/png");
+
+        fetch("/save_drawing", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ image: dataURL })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Remplacer le contenu de la div avec l'ID 'message' par le message du serveur
+            document.getElementById("message").innerText = "Votre chiffre est un " + data.message;
+        })
+        .catch(error => console.error("Erreur:", error));
+    }
+
+</script>

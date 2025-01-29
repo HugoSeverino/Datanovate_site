@@ -1,8 +1,12 @@
-from flask import Flask,request, render_template
+from flask import Flask,request, render_template, jsonify
 import subprocess
 import hmac
 import hashlib
 from secret import GITHUB_TOKEN
+import base64
+from io import BytesIO
+from PIL import Image
+import numpy as np
 
 app = Flask(__name__)
 
@@ -48,17 +52,30 @@ def webhook():
         print(f"Erreur lors de la mise à jour : {e}")
         return f"Erreur lors de la mise à jour : {e}", 500
     
+
 @app.route('/')
 def home():
-    return render_template('pages/index.html')
+    return render_template('general.html', current_page='index')
 
-@app.route('/ia_reconnaissance_chiffre/')
-def ia():
-    return render_template('pages/ia_reconnaissance_chiffre.html')
+@app.route('/save_drawing', methods=['POST'])
+def save_drawing():
+    data = request.json.get('image')
+    _, encoded = data.split(",", 1)
+    # Décoder l'image base64
+    image_data = base64.b64decode(encoded)
+    img = Image.open(BytesIO(image_data))
+    img = img.resize((28,28), Image.NEAREST)
+    
+    np_img = np.array(img)
+    # IA
+    return jsonify({'message': 'exemple'})
 
-@app.route('/page_1/')
-def page_1():
-    return render_template('pages/page_1.html')
+@app.route('/<page>/')
+def render_page(page):
+    return render_template('general.html', current_page=page)
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
