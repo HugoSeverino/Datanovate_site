@@ -53,10 +53,9 @@ def webhook():
         print(f"Erreur lors de la mise à jour : {e}")
         return f"Erreur lors de la mise à jour : {e}", 500
     
-#@app.route('/favicon.ico')
-#def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                             'favicon.ico', mimetype='image/vnd.microsoft.icon')
+@app.route('/favicon.ico/')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),'img/favicon.ico')
 
 @app.route('/')
 def home():

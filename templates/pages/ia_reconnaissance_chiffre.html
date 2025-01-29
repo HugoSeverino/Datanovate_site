@@ -1,6 +1,4 @@
 <div class="content flex flex-col justify-between items-center p-4 space-y-4">
-    <a href="/"><button type="button" class="styled px-4 py-1 bg-blue-500 text-white rounded-md">Accueil</button></a>
-    
     <h2 class="text-lg font-semibold">Dessinez un chiffre</h2>
     <canvas id="canvas" width="280" height="280" class="border border-black cursor-crosshair"></canvas>
 
@@ -9,7 +7,7 @@
         <button onclick="sendDrawing()" type="button" class="px-4 py-2 bg-green-500 text-white rounded-md">Valider</button>
     </div>
     
-    <div id="message" class="text-center text-2xl text-white font-semibold"></div>
+    <img id="image" class="mt-4 w-[280px] h-auto"/>
 </div>
 
 <script>
@@ -81,7 +79,7 @@
         .then(response => response.json())
         .then(data => {
             // Remplacer le contenu de la div avec l'ID 'message' par le message du serveur
-            document.getElementById("message").innerText = "Votre chiffre est un " + data.message;
+            document.getElementById("image").src = data.message + "?t=" + new Date().getTime();;
         })
         .catch(error => console.error("Erreur:", error));
     }
