@@ -12,8 +12,9 @@ def encoded_to_array(encoded):
     img = img.convert("1")
     img.save("static/img/chiffre_norm.png")
 
-    np_img = np.array(img)
+    np_img = np.array(img, dtype=np.float32)
+    
     np_img = np_img.reshape(1, 28, 28, 1)
-    print(np_img)
+    
     return np_img
 
