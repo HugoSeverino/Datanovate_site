@@ -8,6 +8,7 @@
     </div>
     
     <img id="image" class="mt-4 w-[280px] h-auto"/>
+    <p id="rep" ></p>
 </div>
 
 <script>
@@ -66,6 +67,8 @@
     function clearCanvas() {
         ctx.fillStyle = "rgba(255, 255, 255, 1)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+        document.getElementById("image").src = ""
+        document.getElementById("rep").textContent = "";
     }
 
     function sendDrawing() {
@@ -79,7 +82,8 @@
         .then(response => response.json())
         .then(data => {
             // Remplacer le contenu de la div avec l'ID 'message' par le message du serveur
-            document.getElementById("image").src = data.message + "?t=" + new Date().getTime();;
+            document.getElementById("image").src = data.message + "?t=" + new Date().getTime();
+            document.getElementById("rep").textContent = data.rep;
         })
         .catch(error => console.error("Erreur:", error));
     }
