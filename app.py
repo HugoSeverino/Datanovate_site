@@ -3,11 +3,9 @@ import subprocess
 import hmac
 import hashlib
 from secret import GITHUB_TOKEN
-import base64
-from io import BytesIO
-from PIL import Image
-import numpy as np
 import os
+import models.model as md
+import services.image_processing as img_p
 
 app = Flask(__name__)
 
@@ -65,16 +63,12 @@ def home():
 def save_drawing():
     data = request.json.get('image')
     _, encoded = data.split(",", 1)
+
     # Décoder l'image base64
-    image_data = base64.b64decode(encoded)
-    img = Image.open(BytesIO(image_data))
-    img.save("static/img/chiffre.png")
-    img = img.resize((28,28), Image.NEAREST)
-    img = img.convert("1")
-    img.save("static/img/chiffre_norm.png")
-    np_img = np.array(img)
-    # IA
-    return jsonify({'message': '/static/img/chiffre.png'})
+    np_img = img_p.encoded_to_array(encoded)
+    rep = md.predict(np_img)
+    
+    return jsonify({'message': '/static/img/chiffre.png', 'rep': int(rep)})
 
 @app.route('/<page>/')
 def render_page(page):
