@@ -38,11 +38,11 @@
     </div>
 
     <!-- Bloc Détails -->
-    <div id="details" class="bg-white p-4 rounded-lg shadow-lg">
+    <div id="details" class="bg-white p-4 rounded-lg shadow-lg w-[280px]">
         <h3 class="text-gray-700 text-2xl font-semibold mb-4">📊 Probabilités</h3>
         <ul class="text-white text-lg space-y-2">
             {% for i in range(10) %}
-                <li id="li_{{ i }}" class="bg-white text-gray-900 px-4 py-2 rounded-lg shadow">0
+                <li id="li_{{ i }}" class="bg-white text-gray-900 px-4 py-2 rounded-lg shadow text-left">Probabilité de {{i}} : 0%
                 </li>
             {% endfor %}
         </ul>
@@ -91,7 +91,7 @@
         const distance = Math.sqrt(dx * dx + dy * dy);
         
         // Nombre de points à dessiner entre lastX, lastY et la position actuelle
-        const pointsCount = Math.floor(distance / 2); // Ajuster la valeur pour avoir plus ou moins de points
+        const pointsCount = Math.floor(distance); // Ajuster la valeur pour avoir plus ou moins de points
     
         // Dessiner plusieurs points pour créer un effet de trait
         for (let i = 0; i < pointsCount; i++) {
@@ -114,7 +114,7 @@
         document.getElementById("rep").textContent = "Prêt à deviner !";
 
         for (let i = 0; i < 10; i++) {
-            document.getElementById("li_" + i).innerText = "0";
+            document.getElementById("li_" + i).innerText = "Probabilité de " + i + " : 0%";
         }
     }
 
