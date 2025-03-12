@@ -1,26 +1,54 @@
-<div class="content flex flex-col justify-between items-center p-4 bg-white shadow-lg rounded-lg text-center">
-    <h2 class="text-2xl font-bold mb-4 text-gray-700">✍️ Dessinez un chiffre</h2>
-    <div class="relative group">
-        <canvas 
-          id="canvas" 
-          width="280" 
-          height="280"
-          class="w-full h-auto border-4 border-gray-300 rounded-xl shadow-md cursor-crosshair bg-white transition-all duration-300 group-hover:border-blue-200 group-hover:shadow-lg"
-        ></canvas>
-      </div>
-    <div class="flex flex-row justify-center space-x-4 mt-4">
-        <button onclick="clearCanvas()" type="button" class="px-6 py-2.5 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 hover:shadow-lg transform transition-all duration-200 active:scale-95 flex items-center">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-            </svg>
-            Effacer
+<div class="flex justify-evenly items-center w-[70%] space-y-4 content">
+    <div class="flex flex-col justify-between items-center p-4 bg-white shadow-lg rounded-lg text-center">
+        <h2 class="text-2xl font-bold mb-4 text-gray-700">✍️ Dessinez un chiffre</h2>
+
+        <div class="relative group">
+            <canvas 
+            id="canvas" 
+            width="280" 
+            height="280"
+            class="w-full h-auto border-4 border-gray-300 rounded-xl shadow-md cursor-crosshair bg-white group-hover:border-blue-200 group-hover:shadow-lg"
+            ></canvas>
+        </div>
+
+        <div class="flex flex-row justify-center space-x-4 mt-4">
+            <button onclick="clearCanvas()" type="button" class="px-6 py-2.5 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 hover:shadow-lg flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+                Effacer
+            </button>
+        </div>
+        
+        <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+            <p id="rep" class="text-xl font-bold text-blue-600 text-center">Prêt à deviner !</p>
+        </div>
+
+        <button id="detailsButton" onclick="showDetails()" type="button" class="mt-2 px-4 py-2 bg-blue-300 text-blue-800 font-semibold rounded-lg shadow-md hover:bg-blue-400 hover:shadow-lg hidden">
+            Détails
         </button>
     </div>
-    
-    <div class="mt-4 p-4 bg-blue-50 rounded-lg transition-all duration-300">
-        <p id="rep" class="text-xl font-bold text-blue-600 text-center">Prêt à deviner !</p>
+
+    <div id="flecheButton" class="">
+        <button onclick="hideDetails()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>   
+        </button>     
+    </div>
+
+    <!-- Bloc Détails -->
+    <div id="details" class="bg-white p-4 rounded-lg shadow-lg w-[280px]">
+        <h3 class="text-gray-700 text-2xl font-semibold mb-4">📊 Probabilités</h3>
+        <ul class="text-white text-lg space-y-2">
+            {% for i in range(10) %}
+                <li id="li_{{ i }}" class="bg-white text-gray-900 px-4 py-2 rounded-lg shadow text-left">Probabilité de {{i}} : 0%
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
+
 
 <script>
     let canvas = document.getElementById("canvas");
@@ -35,7 +63,8 @@
                 lastX = event.offsetX;
                 lastY = event.offsetY; 
                 drawing = true;
-                sendDrawing();});
+                sendDrawing();
+                });
     canvas.addEventListener("mouseup", () => { 
                 sendDrawing();
                 drawing = false;});
@@ -62,7 +91,7 @@
         const distance = Math.sqrt(dx * dx + dy * dy);
         
         // Nombre de points à dessiner entre lastX, lastY et la position actuelle
-        const pointsCount = Math.floor(distance / 2); // Ajuster la valeur pour avoir plus ou moins de points
+        const pointsCount = Math.floor(distance); // Ajuster la valeur pour avoir plus ou moins de points
     
         // Dessiner plusieurs points pour créer un effet de trait
         for (let i = 0; i < pointsCount; i++) {
@@ -83,6 +112,10 @@
         ctx.fillStyle = "rgba(255, 255, 255, 1)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         document.getElementById("rep").textContent = "Prêt à deviner !";
+
+        for (let i = 0; i < 10; i++) {
+            document.getElementById("li_" + i).innerText = "Probabilité de " + i + " : 0%";
+        }
     }
 
     function sendDrawing() {
@@ -96,12 +129,29 @@
         .then(response => response.json())
         .then(data => {
             // Remplacer le contenu de la div avec l'ID 'message' par le message du serveur
-            document.getElementById("rep").textContent = data.rep;
+            document.getElementById("rep").textContent = "C'est un " + data.predict;
+
+            for (let i = 0; i < data.predict_probas.length; i++) {
+                text = "Probabilité de " + i + " : " + Math.round(data.predict_probas[i] * 100 * 100)/100 + "%"; 
+                document.getElementById("li_" + i).innerText = text;
+            }
             if (drawing) {
                 sendDrawing();
             }
         })
         .catch(error => console.error("Erreur:", error));
+    }
+
+    function showDetails() {
+        document.getElementById('details').classList.remove('hidden');
+        document.getElementById('flecheButton').classList.remove('hidden');
+        document.getElementById('detailsButton').classList.add('hidden');
+    }
+
+    function hideDetails() {
+        document.getElementById('details').classList.add('hidden');
+        document.getElementById('flecheButton').classList.add('hidden');
+        document.getElementById('detailsButton').classList.remove('hidden');
     }
 
 </script>
