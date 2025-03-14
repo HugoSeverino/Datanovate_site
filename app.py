@@ -66,10 +66,13 @@ def save_drawing():
 
     # Décoder l'image base64
     np_img = img_p.encoded_to_array(encoded)
-    predict = md.predict(np_img)
     
-    predict_probas = md.predict_probas(np_img).tolist()
-    
+    predict, predict_probas = md.predict(np_img)
+    predict_probas = predict_probas.tolist()
+    predict_reshape = md.predict_reshape(np_img)[0]
+
+    img_p.save_from_array(predict_reshape, "after_reshape.png")
+
     return jsonify({'message': '/static/img/chiffre.png', 'predict': int(predict), 'predict_probas': predict_probas})
 
 @app.route('/<page>/')
