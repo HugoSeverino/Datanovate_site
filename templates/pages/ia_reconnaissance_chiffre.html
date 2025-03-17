@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-evenly items-center w-[85%] space-y-4 content">
+<div class="flex flex-col justify-evenly items-center min-w-[85vw] space-y-4 content overflow-hidden">
     <div class="flex flex-col justify-between items-center p-4 bg-white shadow-lg rounded-lg text-center">
         <h2 class="text-2xl font-bold mb-4 text-gray-700">✍️ Dessinez un chiffre</h2>
 
@@ -127,108 +127,33 @@
                 </div>
             </div>
 
-            <div class="flex flex-col shadow-lg rounded-lg p-4">
+            <div class="flex flex-col shadow-lg rounded-lg p-4 relative">
                 <h3 class="text-xl font-bold mb-10">Couches de sortie</h3>
-                <div class="flex flex-col items-center justify-evenly space-y-6">
-                    <div class="relative w-7 h-7 bg-green-500 shadow-lg rounded-lg">
-                        <div class="absolute left-7 top-[-40px]">
-                            <svg width="130" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <marker id="arrowhead" markerHeight="7" markerWidth="10" orient="0" refX="8.5" refY="3.5">
-                                    <polygon fill="black" id="svg_1" points="0 0, 10 3.5, 0 7"/>
-                                    </marker>
-                                </defs>
-                                <g class="layer">
-                                    <path d="m0,50.01c10.04,0.58 18.87,-9.6 29.54,-19.54 c10.67,-9.94 17.04,-13.73 25.6,-16.57 c8.56,-2.84 29.1,-3.04 70.25,-3.23" fill="transparent" id="svg_2" marker-end="url(#arrowhead)" stroke="black" stroke-width="3"/>
-                                </g>
-                            </svg>
-                        </div>
+                <div class="flex justify-center">
+                    <div class="flex flex-col items-center justify-evenly space-y-6">
+                        {% for i in range(10) %}
+                            <div id="neuron_{{ i }}" class="relative w-7 h-7 bg-green-500 shadow-lg rounded-lg"></div>
+                        {% endfor %}
                     </div>
-
-                    <div class="relative w-7 h-7 bg-green-500 shadow-lg rounded-lg">
-                        <div class="absolute left-6 top-[-40px]">
-                            <svg width="130" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-                                <g class="layer">
-                                    <path d="m0,50.01c10.04,0.58 18.87,-9.6 29.54,-19.54 c10.67,-9.94 17.04,-13.73 25.6,-16.57 c8.56,-2.84 29.1,-3.04 70.25,-3.23" fill="transparent" id="svg_2" marker-end="url(#arrowhead)" stroke="black" stroke-width="3"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-
-                    <div class="relative w-7 h-7 bg-green-500 shadow-lg rounded-lg">
-                        <div class="absolute left-6 top-[-40px]">
-                            <svg width="130" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-                                <g class="layer">
-                                    <path d="m0,50.01c10.04,0.58 18.87,-9.6 29.54,-19.54 c10.67,-9.94 17.04,-13.73 25.6,-16.57 c8.56,-2.84 29.1,-3.04 70.25,-3.23" fill="transparent" id="svg_2" marker-end="url(#arrowhead)" stroke="black" stroke-width="3"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="relative w-7 h-7 bg-green-500 shadow-lg rounded-lg">
-                        <div class="absolute left-6 top-[-40px]">
-                            <svg width="130" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-                                <g class="layer">
-                                    <path d="m0,50.01c10.04,0.58 18.87,-9.6 29.54,-19.54 c10.67,-9.94 17.04,-13.73 25.6,-16.57 c8.56,-2.84 29.1,-3.04 70.25,-3.23" fill="transparent" id="svg_2" marker-end="url(#arrowhead)" stroke="black" stroke-width="3"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="relative w-7 h-7 bg-green-500 shadow-lg rounded-lg">
-                        <div class="absolute left-6 top-[-40px]">
-                            <svg width="130" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-                                <g class="layer">
-                                    <path d="m0,50.01c10.04,0.58 18.87,-9.6 29.54,-19.54 c10.67,-9.94 17.04,-13.73 25.6,-16.57 c8.56,-2.84 29.1,-3.04 70.25,-3.23" fill="transparent" id="svg_2" marker-end="url(#arrowhead)" stroke="black" stroke-width="3"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="relative w-7 h-7 bg-green-500 shadow-lg rounded-lg">
-                        <div class="absolute left-6 top-[-40px]">
-                            <svg width="130" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-                                <g class="layer">
-                                    <path d="m0,50.01c10.04,0.58 18.87,-9.6 29.54,-19.54 c10.67,-9.94 17.04,-13.73 25.6,-16.57 c8.56,-2.84 29.1,-3.04 70.25,-3.23" fill="transparent" id="svg_2" marker-end="url(#arrowhead)" stroke="black" stroke-width="3"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="relative w-7 h-7 bg-green-500 shadow-lg rounded-lg">
-                        <div class="absolute left-6 top-[-40px]">
-                            <svg width="130" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-                                <g class="layer">
-                                    <path d="m0,50.01c10.04,0.58 18.87,-9.6 29.54,-19.54 c10.67,-9.94 17.04,-13.73 25.6,-16.57 c8.56,-2.84 29.1,-3.04 70.25,-3.23" fill="transparent" id="svg_2" marker-end="url(#arrowhead)" stroke="black" stroke-width="3"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="relative w-7 h-7 bg-green-500 shadow-lg rounded-lg">
-                        <div class="absolute left-6 top-[-40px]">
-                            <svg width="130" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-                                <g class="layer">
-                                    <path d="m0,50.01c10.04,0.58 18.87,-9.6 29.54,-19.54 c10.67,-9.94 17.04,-13.73 25.6,-16.57 c8.56,-2.84 29.1,-3.04 70.25,-3.23" fill="transparent" id="svg_2" marker-end="url(#arrowhead)" stroke="black" stroke-width="3"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="relative w-7 h-7 bg-green-500 shadow-lg rounded-lg">
-                        <div class="absolute left-6 top-[-40px]">
-                            <svg width="130" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-                                <g class="layer">
-                                    <path d="m0,50.01c10.04,0.58 18.87,-9.6 29.54,-19.54 c10.67,-9.94 17.04,-13.73 25.6,-16.57 c8.56,-2.84 29.1,-3.04 70.25,-3.23" fill="transparent" id="svg_2" marker-end="url(#arrowhead)" stroke="black" stroke-width="3"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="relative w-7 h-7 bg-green-500 shadow-lg rounded-lg">
-                        <div class="absolute left-6 top-[-40px]">
-                            <svg width="130" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-                                <g class="layer">
-                                    <path d="m0,50.01c10.04,0.58 18.87,-9.6 29.54,-19.54 c10.67,-9.94 17.04,-13.73 25.6,-16.57 c8.56,-2.84 29.1,-3.04 70.25,-3.23" fill="transparent" id="svg_2" marker-end="url(#arrowhead)" stroke="black" stroke-width="3"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    
-
+                </div>
+                <div class="absolute h-[100%]">
+                    <svg width="275" class="h-[100%]" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arrowhead" markerHeight="7" markerWidth="10" orient="0" refX="8.5" refY="3.5">
+                                <polygon fill="black" points="0 0, 10 3.5, 0 7"/>
+                            </marker>
+                        </defs>
+                        <g class="layer">
+                            {% for i in range(10) %}
+                                <!-- Calcul des positions des lignes -->
+                                <path d="M100,{{ 81 + i * 52 }} C140,{{ 81 + i * 52 }}, 150,{{ 68 + i * 52 }}, 211,{{ 70 + i * 52 }}"
+                                    fill="transparent"
+                                    marker-end="url(#arrowhead)"
+                                    stroke="black"
+                                    stroke-width="2"/>
+                            {% endfor %}
+                        </g>
+                    </svg>
                 </div>
             </div>
             
@@ -332,8 +257,9 @@
                 text = "Chiffre " + i + " : " + Math.round(data.predict_probas[i] * 100 * 100)/100 + "%"; 
                 document.getElementById("li_" + i).innerText = text;
             }
-            document.getElementById("image").src = "../static/img/enlarged_chiffre_norm.png?timestamp=" + (new Date().getTime()); // timestamp pour l'actualisation automatique de l'image
-            document.getElementById("after_reshape").src = "../static/img/after_reshape.png?timestamp=" + (new Date().getTime());
+            time = new Date().getTime();
+            document.getElementById("image").src = "../static/img/enlarged_chiffre_norm.png?timestamp=" + time; // timestamp pour l'actualisation automatique de l'image
+            document.getElementById("after_reshape").src = "../static/img/after_reshape.png?timestamp=" + time;
             if (drawing) {
                 sendDrawing();
             }
