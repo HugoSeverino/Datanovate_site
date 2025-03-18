@@ -37,11 +37,11 @@
         </button>     
     </div>
 
-    <div class="bg-white shadow-lg rounded-lg text-center w-[100%] space-x-3">
+    <div class="bg-white shadow-lg rounded-lg text-center min-w-[100%]">
         <h2 class="text-2xl font-bold mb-4 text-gray-700">Réseau de neurones</h2>
 
-        <div class="flex flex-row items-center justify-between text-gray-700">
-            <div class="">
+        <div class="flex flex-row items-center justify-between text-gray-700 space-x-[11.5px]">
+            <div class="pl-3">
                 <h3 class="text-xl font-bold mb-4">Image normalisée</h3>
                 <div>
                     <div class="flex items-center">
@@ -54,56 +54,56 @@
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col shadow-xl rounded-lg p-4">
-                <h3 class="text-xl font-bold mb-4">Convolutions</h3>
+            <div class="inline-flex flex-col shadow-xl rounded-lg p-4">
+                <h3 class="text-xl font-bold mb-4 whitespace-nowrap">Convolutions</h3>
                 <div class="flex items-center space-x-4">
-                    <div class="w-[50px] h-[50px] [perspective:1000px]">
+                    <div class="w-[60px] h-[100px] [perspective:1000px]">
                         <!-- Conteneur du cube -->
-                        <div class="absolute top-1/2 left-1/4 [transform-style:preserve-3d] [transform:translate(-50%,_-50%)_rotateX(-30deg)_rotateY(45deg)]">
+                        <div class="absolute top-1/4 left-[40%] [transform-style:preserve-3d] [transform:translate(-50%,_-50%)_rotateX(-30deg)_rotateY(45deg)]">
                           <!-- Face avant -->
-                          <div class="box [transform:rotateY(-100deg)_translateZ(14px)] bg-[#ff0000] w-[28px] h-[28px]">
+                          <div class="box [transform:rotateY(-100deg)_translateZ(35px)] bg-[#ff0000] w-[70px] h-[70px]">
                           </div>
                           <!-- Face droite -->
-                          <div class="box [transform:rotateY(-10deg)_translateZ(14px)] foo w-[28px] h-[28px]">
+                          <div class="box [transform:rotateY(-10deg)_translateZ(35px)] foo w-[32px] h-[70px]">
                           </div>
                           <!-- Face supérieure -->
-                          <div class="box [transform:rotateY(-10deg)_rotateX(90deg)_translateZ(14px)] foo w-[28px] h-[28px]">
+                          <div class="box [transform:rotateY(-10deg)_rotateX(90deg)_translateZ(35px)] foo w-[32px] h-[70px]">
                           </div>
                         </div>
                     </div>
-                    <div class="w-[80px] h-[50px] [perspective:1000px]">
+                    <div class="w-[60px] h-[100px] [perspective:1000px]">
                         <!-- Conteneur du cube -->
-                        <div class="absolute top-[75%] left-[12.5%] [transform-style:preserve-3d] [transform:translate(-50%,_-50%)_rotateX(-30deg)_rotateY(45deg)]">
+                        <div class="absolute top-[64%] left-[25%] [transform-style:preserve-3d] [transform:translate(-50%,_-50%)_rotateX(-30deg)_rotateY(45deg)]">
                             <!-- Face avant -->
-                            <div class="box [transform:rotateY(-100deg)_translateZ(7px)_translateX(-4px)] bg-[#ff0000] w-[14px] h-[14px]">
+                            <div class="box [transform:rotateY(-100deg)_translateZ(17.5px)_translateX(-4px)] bg-[#ff0000] w-[35px] h-[35px]">
                             </div>
                             <!-- Face droite -->
-                            <div class="box [transform:rotateY(-10deg)_translateZ(7px)] foo w-[64px] h-[14px]">
+                            <div class="box [transform:rotateY(-10deg)_translateZ(17.5px)] foo w-[64px] h-[35px]">
                             </div>
                             <!-- Face supérieure -->
-                            <div class="box [transform:rotateY(-10deg)_rotateX(90deg)_translateZ(7px)] foo w-[64px] h-[14px]">
+                            <div class="box [transform:rotateY(-10deg)_rotateX(90deg)_translateZ(17.5px)] foo w-[64px] h-[35px]">
                             </div>
                         </div>
                     </div>
-                    <div class="w-[130px] h-[50px] [perspective:1000px]">
+                    <div class="w-[120px] h-[100px] [perspective:1000px]">
                         <!-- Conteneur du cube -->
-                        <div class="absolute top-[100%] left-0 [transform-style:preserve-3d] [transform:translate(-50%,_-50%)_rotateX(-30deg)_rotateY(45deg)]">
+                        <div class="absolute top-[84%] left-[20%] [transform-style:preserve-3d] [transform:translate(-50%,_-50%)_rotateX(-30deg)_rotateY(45deg)]">
                             <!-- Face avant -->
-                            <div class="box [transform:rotateY(-100deg)_translateZ(4px)_translateX(-10px)] bg-[#ff0000] w-[7px] h-[7px]">
+                            <div class="box [transform:rotateY(-100deg)_translateZ(8.75px)_translateX(-10px)] bg-[#ff0000] w-[17.5px] h-[17.5px]">
                             </div>
                             <!-- Face droite -->
-                            <div class="box [transform:rotateY(-10deg)_translateZ(4px)] foo w-[128px] h-[7px]">
+                            <div class="box [transform:rotateY(-10deg)_translateZ(8.75px)] foo w-[128px] h-[17.5px]">
                             </div>
                             <!-- Face supérieure -->
-                            <div class="box [transform:rotateY(-10deg)_rotateX(90deg)_translateZ(4px)_translateY(1px)] foo w-[128px] h-[7px]">
+                            <div class="box [transform:rotateY(-10deg)_rotateX(90deg)_translateZ(8.75px)_translateY(1px)] foo w-[128px] h-[17.5px]">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="flex flex-col shadow-lg rounded-lg p-3 ">
-                <h3 class="text-xl font-bold mb-4">Reshape</h3>
+            <div class="inline-flex flex-col shadow-lg rounded-lg p-3 ">
+                <h3 class="text-xl font-bold mb-4 whitespace-nowrap">Reshape</h3>
                 <p>128</p>
                 
                 <div class="flex space-x-1">
@@ -112,23 +112,16 @@
                 </div>
             </div>
 
-            <div class="flex flex-col shadow-lg rounded-lg bg-opacity-50 p-4">
-                <h3 class="text-xl font-bold mb-4">Couches cachées</h3>
-                <div class="flex">
-                    <div class="flex flex-col bg-blue-500 shadow-lg opacity-50 p-2">
-                        
-                    </div>
-                    <div>
-                        
-                    </div>
-                    <div>
-                        
-                    </div>
+            <div class="inline-flex flex-col shadow-lg rounded-lg bg-opacity-50 p-4">
+                <h3 class="text-xl font-bold mb-4 whitespace-nowrap">Couches cachées</h3>
+                <div class="flex justify-evenly">
+                    <div class="flex flex-col bg-blue-500 rounded shadow-lg opacity-50 w-7 h-[400px]"></div>
+                    <div class="flex flex-col bg-blue-500 rounded shadow-lg opacity-50 w-7 h-[400px]"></div>
                 </div>
             </div>
 
-            <div class="flex flex-col shadow-lg rounded-lg p-4 relative">
-                <h3 class="text-xl font-bold mb-10">Couches de sortie</h3>
+            <div class="inline-flex flex-col shadow-lg rounded-lg p-4 relative">
+                <h3 class="text-xl font-bold mb-10 whitespace-nowrap">Couches de sortie</h3>
                 <div class="flex justify-center">
                     <div class="flex flex-col items-center justify-evenly space-y-6">
                         {% for i in range(10) %}
@@ -146,7 +139,7 @@
                         <g class="layer">
                             {% for i in range(10) %}
                                 <!-- Calcul des positions des lignes -->
-                                <path d="M100,{{ 81 + i * 52 }} C140,{{ 81 + i * 52 }}, 150,{{ 68 + i * 52 }}, 211,{{ 70 + i * 52 }}"
+                                <path d="M100,{{ 81 + i * 52 }} C140,{{ 81 + i * 52 }}, 150,{{ 68 + i * 52 }}, 212,{{ 70 + i * 52 }}"
                                     fill="transparent"
                                     marker-end="url(#arrowhead)"
                                     stroke="black"
