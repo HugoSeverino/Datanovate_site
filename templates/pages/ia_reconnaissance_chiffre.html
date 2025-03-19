@@ -40,7 +40,7 @@
     <div class="bg-white shadow-lg rounded-lg text-center min-w-[100%]">
         <h2 class="text-2xl font-bold mb-4 text-gray-700">Réseau de neurones</h2>
 
-        <div class="flex flex-row items-center justify-between text-gray-700 space-x-[11.5px]">
+        <div class="flex flex-row items-center justify-between text-gray-700 space-x-[15.524px]">
             <div class="pl-3">
                 <h3 class="text-xl font-bold mb-4">Image normalisée</h3>
                 <div>
@@ -61,7 +61,8 @@
                         <!-- Conteneur du cube -->
                         <div class="absolute top-1/4 left-[40%] [transform-style:preserve-3d] [transform:translate(-50%,_-50%)_rotateX(-30deg)_rotateY(45deg)]">
                           <!-- Face avant -->
-                          <div class="box [transform:rotateY(-100deg)_translateZ(35px)] bg-[#ff0000] w-[70px] h-[70px]">
+                          <div class="box [transform:rotateY(-100deg)_translateZ(35px)_translateX(3px)] w-[70px] h-[70px]">
+                            <img id="conv_1"/>
                           </div>
                           <!-- Face droite -->
                           <div class="box [transform:rotateY(-10deg)_translateZ(35px)] foo w-[32px] h-[70px]">
@@ -75,7 +76,8 @@
                         <!-- Conteneur du cube -->
                         <div class="absolute top-[64%] left-[25%] [transform-style:preserve-3d] [transform:translate(-50%,_-50%)_rotateX(-30deg)_rotateY(45deg)]">
                             <!-- Face avant -->
-                            <div class="box [transform:rotateY(-100deg)_translateZ(17.5px)_translateX(-4px)] bg-[#ff0000] w-[35px] h-[35px]">
+                            <div class="box [transform:rotateY(-100deg)_translateZ(17.5px)_translateX(-4px)_translateX(2px)] w-[35px] h-[35px]">
+                                <img id="conv_2"/>
                             </div>
                             <!-- Face droite -->
                             <div class="box [transform:rotateY(-10deg)_translateZ(17.5px)] foo w-[64px] h-[35px]">
@@ -89,7 +91,8 @@
                         <!-- Conteneur du cube -->
                         <div class="absolute top-[84%] left-[20%] [transform-style:preserve-3d] [transform:translate(-50%,_-50%)_rotateX(-30deg)_rotateY(45deg)]">
                             <!-- Face avant -->
-                            <div class="box [transform:rotateY(-100deg)_translateZ(8.75px)_translateX(-10px)] bg-[#ff0000] w-[17.5px] h-[17.5px]">
+                            <div class="box [transform:rotateY(-100deg)_translateZ(8.75px)_translateX(-10px)] w-[17.5px] h-[17.5px]">
+                                <img id="conv_3"/>
                             </div>
                             <!-- Face droite -->
                             <div class="box [transform:rotateY(-10deg)_translateZ(8.75px)] foo w-[128px] h-[17.5px]">
@@ -139,7 +142,7 @@
                         <g class="layer">
                             {% for i in range(10) %}
                                 <!-- Calcul des positions des lignes -->
-                                <path d="M100,{{ 81 + i * 52 }} C140,{{ 81 + i * 52 }}, 150,{{ 68 + i * 52 }}, 212,{{ 70 + i * 52 }}"
+                                <path d="M100,{{ 81 + i * 52 }} C140,{{ 81 + i * 52 }}, 150,{{ 68 + i * 52 }}, 217,{{ 70 + i * 52 }}"
                                     fill="transparent"
                                     marker-end="url(#arrowhead)"
                                     stroke="black"
@@ -253,6 +256,9 @@
             time = new Date().getTime();
             document.getElementById("image").src = "../static/img/enlarged_chiffre_norm.png?timestamp=" + time; // timestamp pour l'actualisation automatique de l'image
             document.getElementById("after_reshape").src = "../static/img/after_reshape.png?timestamp=" + time;
+            document.getElementById("conv_1").src = "../static/img/first_conv_pool.png?timestamp=" + time;
+            document.getElementById("conv_2").src = "../static/img/second_conv_pool.png?timestamp=" + time;
+            document.getElementById("conv_3").src = "../static/img/third_conv_pool.png?timestamp=" + time;
             if (drawing) {
                 sendDrawing();
             }

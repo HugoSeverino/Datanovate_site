@@ -74,7 +74,7 @@ box-shadow:
 .foo {
     background: repeating-linear-gradient(
     to right,
-    #ff0000 0px 2px,
-    #000000 2px 3px
+    #4d4d4d 0px 1px,
+    #ffffff 1px 3px
     );
 }
