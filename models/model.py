@@ -7,12 +7,14 @@ import os
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
+
 MODEL_RESHAPE_PATH = os.path.join(BASE_DIR, "other_output_model.onnx")  
+options = ort.SessionOptions()
+options.optimized_model_filepath = MODEL_RESHAPE_PATH
+other_output_model = ort.InferenceSession(MODEL_RESHAPE_PATH, sess_options=options) # sess_options enlève un warning inutile
 
-other_output_model = ort.InferenceSession(MODEL_RESHAPE_PATH)
 
-MODEL_PATH = os.path.join(BASE_DIR, "model.onnx")  
-
+MODEL_PATH = os.path.join(BASE_DIR, "model.onnx")
 model = ort.InferenceSession(MODEL_PATH)
 
 input_name = model.get_inputs()[0].name
@@ -28,11 +30,6 @@ def predict(img):
 
 def predict_reshape(img):
     results = other_output_model.run(None, {input_name: img})
-    
-    print(results[0].shape)
-    print(results[1].shape)
-    print(results[2].shape)
-    print(results[3].shape)
 
     return results
 
