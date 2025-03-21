@@ -231,6 +231,10 @@
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         document.getElementById("rep").textContent = "Prêt à deviner !";
         document.getElementById("image").src = "";
+        document.getElementById("after_reshape").src = "";
+        document.getElementById("conv_1").src = "";
+        document.getElementById("conv_2").src = "";
+        document.getElementById("conv_3").src = "";
         for (let i = 0; i < 10; i++) {
             document.getElementById("li_" + i).innerText = "Chiffre " + i + " : 0%";
         }

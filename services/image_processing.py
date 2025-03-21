@@ -3,7 +3,7 @@ from io import BytesIO
 from PIL import Image
 import numpy as np
 
-def encoded_to_array(encoded):
+def encoded_to_array(encoded: str) -> np.ndarray:
 
     image_data = base64.b64decode(encoded)
     img = Image.open(BytesIO(image_data))
@@ -22,13 +22,13 @@ def encoded_to_array(encoded):
     return np_img
 
 
-def save_from_array(image: np.ndarray, file: str, scale_factor = 3):
+def save_from_array(image: np.ndarray, file: str, scale_factor: int = 3) -> None:
     img = Image.fromarray(image, mode="L")
     enlarged_image = resize_scale(img, scale_factor)
     enlarged_image.save("static/img/" + file)
 
 
-def resize_scale(img, scale_factor: int):
+def resize_scale(img: Image, scale_factor: int) -> Image:
     # Calculer la nouvelle taille
     new_size = (img.size[0] * scale_factor, img.size[1] * scale_factor)
 

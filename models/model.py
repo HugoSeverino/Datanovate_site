@@ -1,3 +1,4 @@
+from typing import Tuple
 import numpy as np
 import onnxruntime as ort
 import os
@@ -21,14 +22,14 @@ input_name = model.get_inputs()[0].name
 
 
 # Renvoie la prediction + les probabilités
-def predict(img):
+def predict(img: np.ndarray) -> Tuple[np.uint8, np.ndarray]:
     result = model.run(None, {input_name: img})
     rounded_result = np.round(result[0][0].tolist(), 4)
 
     return np.argmax(result), rounded_result
 
 
-def predict_reshape(img):
+def predict_reshape(img: np.ndarray) -> list[np.ndarray]:
     results = other_output_model.run(None, {input_name: img})
 
     return results
