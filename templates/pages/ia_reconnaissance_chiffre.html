@@ -37,7 +37,7 @@
         </button>     
     </div>
 
-    <div class="bg-white shadow-lg rounded-lg text-center min-w-[100%]">
+    <div id="details" class="bg-white shadow-lg rounded-lg text-center min-w-[100%]">
         <h2 class="text-2xl font-bold mb-4 text-gray-700">Réseau de neurones</h2>
 
         <div class="flex flex-row items-center justify-between text-gray-700 space-x-[15.524px]">
@@ -115,11 +115,73 @@
                 </div>
             </div>
 
-            <div class="inline-flex flex-col shadow-lg rounded-lg bg-opacity-50 p-4">
+            <div class="inline-flex flex-col shadow-lg rounded-lg bg-opacity-50 p-4 relative">
                 <h3 class="text-xl font-bold mb-4 whitespace-nowrap">Couches cachées</h3>
-                <div class="flex justify-evenly">
-                    <div class="flex flex-col bg-blue-500 rounded shadow-lg opacity-50 w-7 h-[400px]"></div>
-                    <div class="flex flex-col bg-blue-500 rounded shadow-lg opacity-50 w-7 h-[400px]"></div>
+                <div class="flex justify-evenly items-center z-10">
+                    <div class="flex flex-col justify-evenly space-y-5">
+                        {% for i in range(2) %}
+                            <div class="bg-blue-500 rounded shadow-lg w-9 h-9 flex items-center justify-center text-black">{{i+1}}</div>
+                        {% endfor %}
+                        
+                        <div class="font-bold text-xl h-9 w-9">...</div>
+
+                        {% for i in range(2) %}
+                            <div class="bg-blue-500 rounded shadow-lg w-9 h-9 flex items-center justify-center text-black">{{256 - 1 + i}}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="flex flex-col justify-evenly space-y-5">
+                        {% for i in range(3) %}
+                            <div class="bg-blue-500 rounded shadow-lg w-9 h-9 flex items-center justify-center text-black">{{i+1}}</div>    
+                        {% endfor %}
+                        
+                        <div class="font-bold text-xl h-9 w-9">...</div>
+                        
+                        {% for i in range(3) %}
+                            <div class="bg-blue-500 rounded shadow-lg w-9 h-9 flex items-center justify-center text-black">{{512 - 2 + i}}</div>    
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="absolute h-[100%]">
+                    <svg width="289" class="h-[100%]" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+                        <defs>
+                            <clipPath id="half-ellipse">
+                              <rect x="68" y="114" width="6" height="10"/>
+                            </clipPath>
+                        </defs>
+                        <g transform="translate(7 81)">
+                            <g transform="translate(0.0975645 39.8496) scale(1.04857 1.01278) translate(-0.0975645 -39.8496) translate(38.0108 0.546892) matrix(0.0804917 0 0 0.0751495 -40.5286 -0.422488)">
+                             <g transform="rotate(-90 268 267.255)">
+                              <g>
+                               <path d="m77.25,326.15c3.17,3.88 8.29,3.88 11.46,0l68.19,-83.63c3.17,-3.88 1.68,-7.03 -3.33,-7.03l-36.21,0c-5,0 -8.39,-4.01 -7.33,-8.9c18.63,-84.99 94.29,-148.8 184.59,-148.8c104.23,0 189.03,84.99 189.03,189.46c0,104.47 -84.8,189.46 -189.03,189.46c-12.49,0 -22.63,10.15 -22.63,22.68s10.14,22.68 22.63,22.68c129.19,0 234.29,-105.34 234.29,-234.82c0,-129.48 -105.1,-234.81 -234.29,-234.81c-115.33,0 -211.39,83.96 -230.69,194.09c-0.87,4.94 -5.44,8.96 -10.44,8.96l-41.12,0c-5,0 -6.49,3.14 -3.33,7.03l68.2,83.63l0.01,0z"/>
+                              </g>
+                             </g>
+                            </g>
+                        </g>
+                        <g transform="translate(76 27)">
+                            <g transform="translate(0.0975645 39.8496) scale(1.04857 1.01278) translate(-0.0975645 -39.8496) translate(38.0108 0.546892) matrix(0.0804917 0 0 0.0751495 -40.5286 -0.422488)">
+                             <g transform="rotate(-90 268 267.255)">
+                              <g>
+                               <path d="m77.25,326.15c3.17,3.88 8.29,3.88 11.46,0l68.19,-83.63c3.17,-3.88 1.68,-7.03 -3.33,-7.03l-36.21,0c-5,0 -8.39,-4.01 -7.33,-8.9c18.63,-84.99 94.29,-148.8 184.59,-148.8c104.23,0 189.03,84.99 189.03,189.46c0,104.47 -84.8,189.46 -189.03,189.46c-12.49,0 -22.63,10.15 -22.63,22.68s10.14,22.68 22.63,22.68c129.19,0 234.29,-105.34 234.29,-234.82c0,-129.48 -105.1,-234.81 -234.29,-234.81c-115.33,0 -211.39,83.96 -230.69,194.09c-0.87,4.94 -5.44,8.96 -10.44,8.96l-41.12,0c-5,0 -6.49,3.14 -3.33,7.03l68.2,83.63l0.01,0z"/>
+                              </g>
+                             </g>
+                            </g>
+                        </g>
+                        <g class="" display="inline">
+                            {% for i in range(7) %}
+                                <line fill="none" 
+                                        stroke="black" 
+                                        stroke-width="1" 
+                                        x1="68" x2="101" y1="119" y2="{{63 + i * 56}}"/>
+                            {% endfor %}
+                            {% for i in range(7) %}
+                                <line fill="none" 
+                                        stroke="black" 
+                                        stroke-width="1" 
+                                        x1="68" x2="101" y1="343" y2="{{63 + i * 56}}"/>
+                            {% endfor %}
+                        </g>
+                    </svg>
                 </div>
             </div>
 
@@ -139,7 +201,7 @@
                                 <polygon fill="black" points="0 0, 10 3.5, 0 7"/>
                             </marker>
                         </defs>
-                        <g class="layer">
+                        <g class="">
                             {% for i in range(10) %}
                                 <!-- Calcul des positions des lignes -->
                                 <path d="M100,{{ 81 + i * 52 }} C140,{{ 81 + i * 52 }}, 150,{{ 68 + i * 52 }}, 217,{{ 70 + i * 52 }}"
@@ -154,7 +216,7 @@
             </div>
             
             <!-- Bloc Détails -->
-            <div id="details" class="bg-white p-4 rounded-lg shadow-lg w-[240px]">
+            <div class="bg-white p-4 rounded-lg shadow-lg w-[240px]">
                 <h3 class="text-gray-700 text-2xl font-semibold mb-4">📊 Prédictions</h3>
                 <ul class="text-white text-lg space-y-2">
                     {% for i in range(10) %}
