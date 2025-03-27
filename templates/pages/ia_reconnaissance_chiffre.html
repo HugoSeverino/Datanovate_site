@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-evenly items-center min-w-[85vw] space-y-4 content overflow-hidden">
+<div class="flex flex-col justify-evenly items-center min-w-[1632px] max-w-[1632px] space-y-4 content overflow-hidden">
 
     <!-- Partie saisie utilisateur -->
     <div class="flex flex-col justify-between items-center p-4 bg-white shadow-lg rounded-lg text-center">
@@ -44,7 +44,7 @@
     <div id="details" class="bg-white shadow-lg rounded-lg text-center min-w-[100%]">
         <h2 class="text-2xl font-bold mb-4 text-gray-700">Réseau de neurones</h2>
 
-        <div class="flex flex-row items-center justify-between text-gray-700 space-x-[15.524px]">
+        <div class="flex flex-row items-center justify-between text-gray-700 space-x-[17.748px]">
 
             <!-- Partie Image noralisée -->
             <div class="pl-3">
@@ -205,7 +205,7 @@
                 <div class="flex justify-center">
                     <div class="flex flex-col items-center justify-evenly space-y-6">
                         {% for i in range(10) %}
-                            <div id="neuron_{{ i }}" class="relative w-7 h-7 bg-green-500 shadow-lg rounded-lg"></div>
+                            <div id="neuron_{{ i }}" class="relative w-7 h-7 bg-green-500 shadow-lg rounded-lg z-10"></div>
                         {% endfor %}
                     </div>
                 </div>
@@ -221,7 +221,7 @@
                         <g class="">
                             {% for i in range(10) %}
                                 <!-- Calcul des positions des lignes -->
-                                <path d="M100,{{ 81 + i * 52 }} C140,{{ 81 + i * 52 }}, 150,{{ 68 + i * 52 }}, 217,{{ 70 + i * 52 }}"
+                                <path d="M95,{{ 81 + i * 52 }} C135,{{ 81 + i * 52 }}, 143,{{ 68 + i * 52 }}, 209,{{ 70 + i * 52 }}"
                                     fill="transparent"
                                     marker-end="url(#arrowhead)"
                                     stroke="black"
