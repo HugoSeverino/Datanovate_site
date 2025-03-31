@@ -2,7 +2,7 @@ import base64
 from io import BytesIO
 from PIL import Image
 import numpy as np
-
+import os 
 def encoded_to_array(encoded: str) -> np.ndarray:
 
     image_data = base64.b64decode(encoded)
