@@ -22,10 +22,16 @@ def encoded_to_array(encoded: str) -> np.ndarray:
     return np_img
 
 
-def save_from_array(image: np.ndarray, file: str, scale_factor: int = 3) -> None:
+def save_from_array(image, file):
+    from PIL import Image
+    import numpy as np
+
     img = Image.fromarray(image, mode="L")
-    enlarged_image = resize_scale(img, scale_factor)
-    enlarged_image.save("static/img/" + file)
+    enlarged_image = img.resize((280, 280))  # exemple d’agrandissement
+
+    path = os.path.join("static", "img", file)
+    enlarged_image.save(path)
+
 
 
 def resize_scale(img: Image, scale_factor: int) -> Image:
