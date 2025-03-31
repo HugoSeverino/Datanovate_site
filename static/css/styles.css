@@ -16,7 +16,7 @@
     color: #fff;
     font-family: Arial, sans-serif;
     text-align: center;
-    margin-top: 20vh;
+    margin-top: 17vh;
 }
 
 .content h1 {
@@ -26,4 +26,55 @@
 
 .content p {
     font-size: 1.2em;
+}
+
+.styled {
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 10px;
+    background-color: rgba(220, 0, 0, 1);
+    background-image: linear-gradient(
+        to top left,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.2) 30%,
+        rgba(0, 0, 0, 0)
+    );
+    box-shadow:
+        inset 2px 2px 3px rgba(255, 255, 255, 0.6),
+        inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+    }
+
+.styled:hover {
+background-color: rgba(255, 0, 0, 1);
+}
+
+.styled:active {
+box-shadow:
+    inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+    inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+@import "tailwindcss/preflight";
+
+
+.box {
+    text-align: center;
+    line-height: 50px; /* Centre le texte verticalement */
+    border: 0.5px solid white;
+    font-size: 14px;
+    box-sizing: border-box;
+    position: absolute;
+}
+
+.foo {
+    background: repeating-linear-gradient(
+    to right,
+    #4d4d4d 0px 1px,
+    #ffffff 1px 3px
+    );
 }

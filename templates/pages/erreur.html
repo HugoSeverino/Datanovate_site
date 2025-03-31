@@ -1,0 +1,30 @@
+<div class="max-w-md w-full mx-auto p-8">
+    <div class="bg-white rounded-lg shadow-xl overflow-hidden">
+        <div class="p-8">
+            <div class="flex items-center justify-center">
+                {% if error == 404 %}
+                    <h1 class="text-6xl font-bold text-red-500">404</h1>
+                {% else %}
+                    <h1 class="text-6xl font-bold text-red-500">500</h1>
+                {% endif %}
+            </div>
+            
+            <div class="mt-4 text-center">
+                {% if error == 404 %}
+                    <h2 class="text-2xl font-semibold text-gray-800">Page non trouvée</h2>
+                    <p class="mt-2 text-gray-600">Désolé, la page que vous recherchez n'existe pas.</p>
+                {% else %}
+                    <h2 class="text-2xl font-semibold text-gray-800">Erreur serveur</h2>
+                    <p class="mt-2 text-gray-600">Désolé, une erreur inattendue s'est produite.</p>
+                {% endif %}
+            </div>
+            
+            <div class="mt-8 text-center">
+                <a href="/" 
+                   class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200">
+                    Retour à l'accueil
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

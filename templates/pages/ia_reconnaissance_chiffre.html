@@ -1,0 +1,250 @@
+<div class="flex flex-col justify-evenly items-center min-w-[1632px] max-w-[1632px] space-y-4 content overflow-hidden">
+
+    <!-- Partie saisie utilisateur -->
+    <div class="flex flex-col justify-between items-center p-4 bg-white shadow-lg rounded-lg text-center">
+        <h2 class="text-2xl font-bold mb-4 text-gray-700">✍️ Dessinez un chiffre</h2>
+
+        <!-- Canvas -->
+        <div class="relative group">
+            <canvas 
+            id="canvas" 
+            width="280" 
+            height="280"
+            class="w-full h-auto border-4 border-gray-300 rounded-xl shadow-md cursor-crosshair bg-white group-hover:border-blue-200 group-hover:shadow-lg"
+            ></canvas>
+        </div>
+
+        <div class="flex flex-row justify-center space-x-4 mt-4">
+            <button onclick="clearCanvas()" type="button" class="px-6 py-2.5 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 hover:shadow-lg flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+                Effacer
+            </button>
+        </div>
+        
+        <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+            <p id="rep" class="text-xl font-bold text-blue-600 text-center">Prêt à deviner !</p>
+        </div>
+
+        <button id="detailsButton" onclick="showDetails()" type="button" class="mt-2 px-4 py-2 bg-blue-300 text-blue-800 font-semibold rounded-lg shadow-md hover:bg-blue-400 hover:shadow-lg hidden">
+            Détails
+        </button>
+    </div>
+
+    <div id="flecheButton" class="">
+        <button onclick="hideDetails()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>   
+        </button>     
+    </div>
+
+    <!-- Réseau de neuronnes -->
+    <div id="details" class="bg-white shadow-lg rounded-lg text-center min-w-[100%]">
+        <h2 class="text-2xl font-bold mb-4 text-gray-700">Réseau de neurones</h2>
+
+        <div class="flex flex-row items-center justify-between text-gray-700 space-x-[17.748px]">
+
+            <!-- Partie Image noralisée -->
+            <div class="pl-3">
+                <h3 class="text-xl font-bold mb-4">Image normalisée</h3>
+                <div>
+                    <div class="flex items-center">
+                        <div class="min-w-[70px] mr-4"></div>
+                        <p>28</p>
+                    </div>
+                    <div class="flex items-center">
+                        <p class="mr-2">28</p>
+                        <img id="image" class="min-w-[140px] min-h-[140px] max-w-[140px] bg-white border border-gray-400" src="" alt=""/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Partie Convolutions -->
+            <div class="inline-flex flex-col shadow-xl rounded-lg p-4">
+                <h3 class="text-xl font-bold mb-4 whitespace-nowrap">Convolutions</h3>
+
+                <div class="flex items-center space-x-4">
+                    <div class="w-[60px] h-[100px] [perspective:1000px]">
+                        <!-- Conteneur du cube -->
+                        <div class="absolute top-1/4 left-[40%] [transform-style:preserve-3d] [transform:translate(-50%,_-50%)_rotateX(-30deg)_rotateY(45deg)]">
+                          <!-- Face avant -->
+                          <div class="box [transform:rotateY(-100deg)_translateZ(35px)_translateX(3px)] w-[70px] h-[70px]">
+                            <img id="conv_1"/>
+                          </div>
+                          <!-- Face droite -->
+                          <div class="box [transform:rotateY(-10deg)_translateZ(35px)] foo w-[32px] h-[70px]">
+                          </div>
+                          <!-- Face supérieure -->
+                          <div class="box [transform:rotateY(-10deg)_rotateX(90deg)_translateZ(35px)] foo w-[32px] h-[70px]">
+                          </div>
+                        </div>
+                    </div>
+                    <div class="w-[60px] h-[100px] [perspective:1000px]">
+                        <!-- Conteneur du cube -->
+                        <div class="absolute top-[64%] left-[25%] [transform-style:preserve-3d] [transform:translate(-50%,_-50%)_rotateX(-30deg)_rotateY(45deg)]">
+                            <!-- Face avant -->
+                            <div class="box [transform:rotateY(-100deg)_translateZ(17.5px)_translateX(-4px)_translateX(2px)] w-[35px] h-[35px]">
+                                <img id="conv_2"/>
+                            </div>
+                            <!-- Face droite -->
+                            <div class="box [transform:rotateY(-10deg)_translateZ(17.5px)] foo w-[64px] h-[35px]">
+                            </div>
+                            <!-- Face supérieure -->
+                            <div class="box [transform:rotateY(-10deg)_rotateX(90deg)_translateZ(17.5px)] foo w-[64px] h-[35px]">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-[120px] h-[100px] [perspective:1000px]">
+                        <!-- Conteneur du cube -->
+                        <div class="absolute top-[84%] left-[20%] [transform-style:preserve-3d] [transform:translate(-50%,_-50%)_rotateX(-30deg)_rotateY(45deg)]">
+                            <!-- Face avant -->
+                            <div class="box [transform:rotateY(-100deg)_translateZ(8.75px)_translateX(-10px)] w-[17.5px] h-[17.5px]">
+                                <img id="conv_3"/>
+                            </div>
+                            <!-- Face droite -->
+                            <div class="box [transform:rotateY(-10deg)_translateZ(8.75px)] foo w-[128px] h-[17.5px]">
+                            </div>
+                            <!-- Face supérieure -->
+                            <div class="box [transform:rotateY(-10deg)_rotateX(90deg)_translateZ(8.75px)_translateY(1px)] foo w-[128px] h-[17.5px]">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Partie Reshape -->
+            <div class="inline-flex flex-col shadow-lg rounded-lg p-3 ">
+                <h3 class="text-xl font-bold mb-4 whitespace-nowrap">Reshape</h3>
+                <p>128</p>
+                
+                <div class="flex space-x-1">
+                    <p>9</p>
+                    <img id="after_reshape" src="" alt="" class="h-[27px] min-w-[384px] max-w-[384px]">
+                </div>
+            </div>
+
+            <!-- Partie couches cachées -->
+            <div class="inline-flex flex-col shadow-lg rounded-lg bg-opacity-50 p-4 relative">
+                <h3 class="text-xl font-bold mb-4 whitespace-nowrap">Couches cachées</h3>
+
+                <div class="flex justify-evenly items-center z-10">
+                    <div class="flex flex-col justify-evenly space-y-5">
+                        {% for i in range(2) %}
+                            <div class="bg-blue-500 rounded shadow-lg w-9 h-9 flex items-center justify-center text-black">{{i+1}}</div>
+                        {% endfor %}
+                        
+                        <div class="font-bold text-xl h-9 w-9">...</div>
+
+                        {% for i in range(2) %}
+                            <div class="bg-blue-500 rounded shadow-lg w-9 h-9 flex items-center justify-center text-black">{{256 - 1 + i}}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="flex flex-col justify-evenly space-y-5">
+                        {% for i in range(3) %}
+                            <div class="bg-blue-500 rounded shadow-lg w-9 h-9 flex items-center justify-center text-black">{{i+1}}</div>    
+                        {% endfor %}
+                        
+                        <div class="font-bold text-xl h-9 w-9">...</div>
+                        
+                        {% for i in range(3) %}
+                            <div class="bg-blue-500 rounded shadow-lg w-9 h-9 flex items-center justify-center text-black">{{512 - 2 + i}}</div>    
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- SVG -> liaisons entre neuronnes -->
+                <div class="absolute h-[100%]">
+                    <svg width="289" class="h-[100%]" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+                        <defs>
+                            <clipPath id="half-ellipse">
+                              <rect x="68" y="114" width="6" height="10"/>
+                            </clipPath>
+                        </defs>
+                        <g transform="translate(7 81)">
+                            <g transform="translate(0.0975645 39.8496) scale(1.04857 1.01278) translate(-0.0975645 -39.8496) translate(38.0108 0.546892) matrix(0.0804917 0 0 0.0751495 -40.5286 -0.422488)">
+                             <g transform="rotate(-90 268 267.255)">
+                              <g>
+                               <path d="m77.25,326.15c3.17,3.88 8.29,3.88 11.46,0l68.19,-83.63c3.17,-3.88 1.68,-7.03 -3.33,-7.03l-36.21,0c-5,0 -8.39,-4.01 -7.33,-8.9c18.63,-84.99 94.29,-148.8 184.59,-148.8c104.23,0 189.03,84.99 189.03,189.46c0,104.47 -84.8,189.46 -189.03,189.46c-12.49,0 -22.63,10.15 -22.63,22.68s10.14,22.68 22.63,22.68c129.19,0 234.29,-105.34 234.29,-234.82c0,-129.48 -105.1,-234.81 -234.29,-234.81c-115.33,0 -211.39,83.96 -230.69,194.09c-0.87,4.94 -5.44,8.96 -10.44,8.96l-41.12,0c-5,0 -6.49,3.14 -3.33,7.03l68.2,83.63l0.01,0z"/>
+                              </g>
+                             </g>
+                            </g>
+                        </g>
+                        <g transform="translate(76 27)">
+                            <g transform="translate(0.0975645 39.8496) scale(1.04857 1.01278) translate(-0.0975645 -39.8496) translate(38.0108 0.546892) matrix(0.0804917 0 0 0.0751495 -40.5286 -0.422488)">
+                             <g transform="rotate(-90 268 267.255)">
+                              <g>
+                               <path d="m77.25,326.15c3.17,3.88 8.29,3.88 11.46,0l68.19,-83.63c3.17,-3.88 1.68,-7.03 -3.33,-7.03l-36.21,0c-5,0 -8.39,-4.01 -7.33,-8.9c18.63,-84.99 94.29,-148.8 184.59,-148.8c104.23,0 189.03,84.99 189.03,189.46c0,104.47 -84.8,189.46 -189.03,189.46c-12.49,0 -22.63,10.15 -22.63,22.68s10.14,22.68 22.63,22.68c129.19,0 234.29,-105.34 234.29,-234.82c0,-129.48 -105.1,-234.81 -234.29,-234.81c-115.33,0 -211.39,83.96 -230.69,194.09c-0.87,4.94 -5.44,8.96 -10.44,8.96l-41.12,0c-5,0 -6.49,3.14 -3.33,7.03l68.2,83.63l0.01,0z"/>
+                              </g>
+                             </g>
+                            </g>
+                        </g>
+                        <g class="" display="inline">
+                            {% for i in range(7) %}
+                                <line fill="none" 
+                                        stroke="black" 
+                                        stroke-width="1" 
+                                        x1="68" x2="101" y1="119" y2="{{63 + i * 56}}"/>
+                            {% endfor %}
+                            {% for i in range(7) %}
+                                <line fill="none" 
+                                        stroke="black" 
+                                        stroke-width="1" 
+                                        x1="68" x2="101" y1="343" y2="{{63 + i * 56}}"/>
+                            {% endfor %}
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Partie couche de sortie -->
+            <div class="inline-flex flex-col shadow-lg rounded-lg p-4 relative">
+                <h3 class="text-xl font-bold mb-10 whitespace-nowrap">Couche de sortie</h3>
+
+                <div class="flex justify-center">
+                    <div class="flex flex-col items-center justify-evenly space-y-6">
+                        {% for i in range(10) %}
+                            <div id="neuron_{{ i }}" class="relative w-7 h-7 bg-green-500 shadow-lg rounded-lg z-10"></div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- SVG -> liaisons vers prédictions -->
+                <div class="absolute h-[100%]">
+                    <svg width="275" class="h-[100%]" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arrowhead" markerHeight="7" markerWidth="10" orient="0" refX="8.5" refY="3.5">
+                                <polygon fill="black" points="0 0, 10 3.5, 0 7"/>
+                            </marker>
+                        </defs>
+                        <g class="">
+                            {% for i in range(10) %}
+                                <!-- Calcul des positions des lignes -->
+                                <path d="M95,{{ 81 + i * 52 }} C135,{{ 81 + i * 52 }}, 143,{{ 68 + i * 52 }}, 209,{{ 70 + i * 52 }}"
+                                    fill="transparent"
+                                    marker-end="url(#arrowhead)"
+                                    stroke="black"
+                                    stroke-width="2"/>
+                            {% endfor %}
+                        </g>
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- Partie Predictions -->
+            <div class="bg-white p-4 rounded-lg shadow-lg w-[240px]">
+                <h3 class="text-gray-700 text-2xl font-semibold mb-4">📊 Prédictions</h3>
+                <ul class="text-white text-lg space-y-2">
+                    {% for i in range(10) %}
+                        <li id="li_{{ i }}" class="bg-white text-gray-900 px-4 py-2 rounded-lg shadow text-left">Chiffre {{i}} : 0%
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../static/js/script_page_ia.js"></script>

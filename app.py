@@ -1,8 +1,11 @@
-from flask import Flask,request, render_template
+from flask import Flask,request, render_template, jsonify, send_from_directory
 import subprocess
 import hmac
 import hashlib
 from secret import GITHUB_TOKEN
+import os
+import models.model as md
+import services.image_processing as img_p
 
 app = Flask(__name__)
 
@@ -48,9 +51,45 @@ def webhook():
         print(f"Erreur lors de la mise à jour : {e}")
         return f"Erreur lors de la mise à jour : {e}", 500
     
+@app.route('/favicon.ico/')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),'img/favicon.ico')
+
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('general.html', current_page='index')
+
+@app.route('/save_drawing', methods=['POST'])
+def save_drawing():
+    data = request.json.get('image')
+    _, encoded = data.split(",", 1)
+
+    # Décoder l'image base64
+    np_img = img_p.encoded_to_array(encoded)
+    
+    predict, predict_probas = md.predict(np_img)
+
+    other_outputs = md.predict_reshape(np_img)
+
+    img_p.save_from_array(other_outputs[0][0][1], "first_conv_pool.png", 5)
+    img_p.save_from_array(other_outputs[1][0][1], "second_conv_pool.png", 5)
+    img_p.save_from_array(other_outputs[2][0][1], "third_conv_pool.png", 5)
+    img_p.save_from_array(other_outputs[3][0], "after_reshape.png")
+
+    return jsonify({'message': '/static/img/chiffre.png', 'predict': int(predict), 'predict_probas': predict_probas.tolist()})
+
+@app.route('/<page>/')
+def render_page(page):
+    return render_template('general.html', current_page=page)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('general.html', current_page='erreur', error=404), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('general.html', current_page='erreur', error=500), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

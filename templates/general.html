@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Datanovate</title>
+    
+        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Lien vers le fichier CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+        <!-- Inclusion de la bibliothèque Particles.js depuis un CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    </head>
+    <body class="flex flex-col justify-between items-center">
+        <!-- Conteneur de fond pour les particules -->
+        <div class="background" id="particles-js"></div>
+        {% include 'general/header.html' %}
+        {% include 'pages/' + current_page + '.html' %}
+        {% include 'general/footer.html' %}
+        <!-- Lien vers le fichier JavaScript -->
+        <script src="{{ url_for('static', filename='js/particles-config.js') }}"></script>
+    </body>
+</html>
