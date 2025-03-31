@@ -26,6 +26,8 @@ def save_from_array(image, file):
     from PIL import Image
     import numpy as np
 
+    image = np.squeeze(image)
+   
     img = Image.fromarray(image, mode="L")
     enlarged_image = img.resize((280, 280))  # exemple d’agrandissement
 
