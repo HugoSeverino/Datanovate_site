@@ -71,7 +71,7 @@ def save_drawing():
     other_outputs = md.predict_reshape(np_img)
 
     img_path = os.path.join(app.root_path, "static/img/chiffre.png")
-    img_p.save_from_array(np_img[0, :, :, 0], img_path) # <- assure-toi qu'elle est bien sauvegardée ici
+    img_p.save_from_array(np_img, "chiffre.png") # <- assure-toi qu'elle est bien sauvegardée ici
 
     # Vérification
     if not os.path.exists(img_path) or os.path.getsize(img_path) == 0:
