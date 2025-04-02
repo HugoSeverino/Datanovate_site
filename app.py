@@ -68,20 +68,15 @@ def save_drawing():
     np_img = img_p.encoded_to_array(encoded)
     
     predict, predict_probas = md.predict(np_img)
+
     other_outputs = md.predict_reshape(np_img)
 
-    img_path = os.path.join(app.root_path, "static/img/chiffre.png")
-    img_p.save_from_array(np_img, "chiffre.png") # <- assure-toi qu'elle est bien sauvegardée ici
+    img_p.save_from_array(other_outputs[0][0][1], "first_conv_pool.png", 5)
+    img_p.save_from_array(other_outputs[1][0][1], "second_conv_pool.png", 5)
+    img_p.save_from_array(other_outputs[2][0][1], "third_conv_pool.png", 5)
+    img_p.save_from_array(other_outputs[3][0], "after_reshape.png")
 
-    # Vérification
-    if not os.path.exists(img_path) or os.path.getsize(img_path) == 0:
-        return jsonify({'error': 'Image non générée correctement'}), 500
-
-    return jsonify({
-        'message': '/static/img/chiffre.png',
-        'predict': int(predict),
-        'predict_probas': predict_probas.tolist()
-    })
+    return jsonify({'message': '/static/img/chiffre.png', 'predict': int(predict), 'predict_probas': predict_probas.tolist()})
 
 @app.route('/<page>/')
 def render_page(page):
