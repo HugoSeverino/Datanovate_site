@@ -2,7 +2,7 @@ import base64
 from io import BytesIO
 from PIL import Image
 import numpy as np
-
+import os 
 def encoded_to_array(encoded: str) -> np.ndarray:
 
     image_data = base64.b64decode(encoded)
@@ -22,7 +22,9 @@ def encoded_to_array(encoded: str) -> np.ndarray:
     return np_img
 
 
+
 def save_from_array(image: np.ndarray, file: str, scale_factor: int = 3) -> None:
+
     img = Image.fromarray(image, mode="L")
     enlarged_image = resize_scale(img, scale_factor)
     enlarged_image.save("static/img/" + file)
