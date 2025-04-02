@@ -16,7 +16,7 @@
     color: #fff;
     font-family: Arial, sans-serif;
     text-align: center;
-    margin-top: 17vh;
+    margin-top: 7vh;
 }
 
 .content h1 {
@@ -61,7 +61,6 @@ box-shadow:
 
 @import "tailwindcss/preflight";
 
-
 .box {
     text-align: center;
     line-height: 50px; /* Centre le texte verticalement */
@@ -78,3 +77,95 @@ box-shadow:
     #ffffff 1px 3px
     );
 }
+
+/* classe pour responsive du bloc id=details */
+.responsive-div-details {
+    transform: scale(0.18); /* scale utile pour gérer les svg */
+}
+/* classe pour responsive du bloc div principale de la page ia */
+.responsive-div {
+    max-width: calc(1631.97px * 0.18); /* adapte sa largeur selon le scale du bloc details */
+    max-height: calc(615px + 644px * 0.18); /* adapte sa hauteur selon le scale du bloc details */
+}
+
+@media (min-width: 336px) {
+    .responsive-div-details {
+        transform: scale(0.2);
+    }
+    .responsive-div {
+        max-width: calc(1631.97px * 0.2);
+        max-height: calc(615px + 644px * 0.2);
+    }
+}
+
+@media (min-width: 436px) {
+    .responsive-div-details {
+        transform: scale(0.27);
+    }
+    .responsive-div {
+        max-width: calc(1631.97px * 0.27);
+        max-height: calc(615px + 644px * 0.27);
+    }
+}
+
+@media (min-width: 636px) {
+    .responsive-div-details {
+        transform: scale(0.39);
+    }
+    .responsive-div {
+        max-width: calc(1631.97px * 0.39);
+        max-height: calc(615px + 644px * 0.39);
+    }
+}
+
+@media (min-width: 836px) {
+    .responsive-div-details {
+        transform: scale(0.51);
+    }
+    .responsive-div {
+        max-width: calc(1631.97px * 0.51);
+        max-height: calc(615px + 644px * 0.51);
+    }
+}
+
+@media (min-width: 1036px) {
+    .responsive-div-details {
+        transform: scale(0.63);
+    }
+    .responsive-div {
+        max-width: calc(1631.97px * 0.63);
+        max-height: calc(615px + 644px * 0.63);
+    }
+}
+
+@media (min-width: 1236px) {
+    .responsive-div-details {
+        transform: scale(0.75);
+    }
+    .responsive-div {
+        max-width: calc(1631.97px * 0.75);
+        max-height: calc(615px + 644px * 0.75);
+    }
+}
+
+@media (min-width: 1436px) {
+    .responsive-div-details {
+        transform: scale(0.87);
+    }
+    
+    .responsive-div {
+        max-width: calc(1631.97px * 0.87);
+        max-height: calc(615px + 644px * 0.87);
+    }
+}
+
+@media (min-width: 1636px) {
+    .responsive-div-details {
+        transform: scale(1); 
+    }
+    .responsive-div {
+        max-width: calc(1631.97px);
+        max-height: calc(615px + 644px);
+    }
+}
+
