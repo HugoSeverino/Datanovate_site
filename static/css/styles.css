@@ -78,12 +78,14 @@ box-shadow:
     );
 }
 
+/* classe pour responsive du bloc id=details */
 .responsive-div-details {
-    transform: scale(0.18);
+    transform: scale(0.18); /* scale utile pour gérer les svg */
 }
+/* classe pour responsive du bloc div principale de la page ia */
 .responsive-div {
-    max-width: calc(1631.97px * 0.18);
-    max-height: calc(615px + 644px * 0.18);
+    max-width: calc(1631.97px * 0.18); /* adapte sa largeur selon le scale du bloc details */
+    max-height: calc(615px + 644px * 0.18); /* adapte sa hauteur selon le scale du bloc details */
 }
 
 @media (min-width: 336px) {
