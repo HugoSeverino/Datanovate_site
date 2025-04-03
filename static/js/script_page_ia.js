@@ -6,6 +6,7 @@ let autoSendInterval = null;
 ctx.fillStyle = "rgba(255, 255, 255, 1)";
 ctx.fillRect(0, 0, canvas.width, canvas.height); // Fond blanc
 
+// Pour pc
 canvas.addEventListener("mousedown", () => {
             lastX = event.offsetX;
             lastY = event.offsetY; 
@@ -17,6 +18,19 @@ canvas.addEventListener("mouseup", () => {
             drawing = false;});
 canvas.addEventListener("mousemove", draw);
 
+// Pour mobile
+canvas.addEventListener("touchstart", () => {
+    event.preventDefault();
+    lastX =  event.touches[0].clientX - canvas.getBoundingClientRect().left;
+    lastY = event.touches[0].clientY - canvas.getBoundingClientRect().top; 
+    drawing = true;
+    sendDrawing();
+    });
+canvas.addEventListener("touchend", () => { 
+    sendDrawing();
+    drawing = false;});
+canvas.addEventListener("touchmove", draw);
+
 let lastX = 0;
 let lastY = 0;
 
@@ -26,15 +40,14 @@ function draw(event) {
     ctx.fillStyle = "black";  // Couleur des points
     const pointSize = 4;  // Taille des points
 
-    // Si c'est le premier mouvement, on initialise les coordonnées
-    if (lastX === 0 && lastY === 0) {
-        lastX = event.offsetX;
-        lastY = event.offsetY;
-    }
-
     // Calculer les différences entre les positions pour tracer plusieurs points
-    const dx = event.offsetX - lastX;
-    const dy = event.offsetY - lastY;
+    if (event.touches) {
+        dx = event.touches[0].clientX - canvas.getBoundingClientRect().left - lastX;
+        dy = event.touches[0].clientY - canvas.getBoundingClientRect().top - lastY;
+    } else {
+        dx = event.offsetX - lastX;
+        dy = event.offsetY - lastY;
+    }
     const distance = Math.sqrt(dx * dx + dy * dy);
     
     // Nombre de points à dessiner entre lastX, lastY et la position actuelle
@@ -51,8 +64,13 @@ function draw(event) {
     }
 
     // Mettre à jour les coordonnées pour le prochain mouvement
-    lastX = event.offsetX;
-    lastY = event.offsetY;
+    if (event.touches) {
+        lastX = event.touches[0].clientX - canvas.getBoundingClientRect().left;
+        lastY = event.touches[0].clientY - canvas.getBoundingClientRect().top;
+    } else {
+        lastX = event.offsetX;
+        lastY = event.offsetY;
+    }
 }
 
 function clearCanvas() {
