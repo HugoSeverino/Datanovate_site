@@ -80,53 +80,26 @@ box-shadow:
 
 /* classe pour responsive du bloc id=details */
 .responsive-div-details {
-    transform: scale(0.18); /* scale utile pour gérer les svg */
+    transform: scale(0.51); /* scale utile pour gérer les svg */
+
 }
+
 /* classe pour responsive du bloc div principale de la page ia */
 .responsive-div {
-    max-width: calc(1631.97px * 0.18); /* adapte sa largeur selon le scale du bloc details */
-    max-height: calc(615px + 644px * 0.18); /* adapte sa hauteur selon le scale du bloc details */
+    max-width: 100%;
+    max-height: calc(615px + (644px * 0.51)); /* adapte sa hauteur selon le scale du bloc details */
 }
 
-@media (min-width: 336px) {
-    .responsive-div-details {
-        transform: scale(0.2);
-    }
-    .responsive-div {
-        max-width: calc(1631.97px * 0.2);
-        max-height: calc(615px + 644px * 0.2);
-    }
-}
-
-@media (min-width: 436px) {
-    .responsive-div-details {
-        transform: scale(0.27);
-    }
-    .responsive-div {
-        max-width: calc(1631.97px * 0.27);
-        max-height: calc(615px + 644px * 0.27);
-    }
-}
-
-@media (min-width: 636px) {
-    .responsive-div-details {
-        transform: scale(0.39);
-    }
-    .responsive-div {
-        max-width: calc(1631.97px * 0.39);
-        max-height: calc(615px + 644px * 0.39);
-    }
+.height-responsive {
+    height: calc(644px * 0.51);
 }
 
 @media (min-width: 836px) {
-    .responsive-div-details {
-        transform: scale(0.51);
-    }
     .responsive-div {
         max-width: calc(1631.97px * 0.51);
-        max-height: calc(615px + 644px * 0.51);
     }
 }
+
 
 @media (min-width: 1036px) {
     .responsive-div-details {
@@ -136,6 +109,9 @@ box-shadow:
         max-width: calc(1631.97px * 0.63);
         max-height: calc(615px + 644px * 0.63);
     }
+    .height-responsive {
+        height: calc(644px * 0.63);
+    }
 }
 
 @media (min-width: 1236px) {
@@ -144,7 +120,10 @@ box-shadow:
     }
     .responsive-div {
         max-width: calc(1631.97px * 0.75);
-        max-height: calc(615px + 644px * 0.75);
+        max-height: calc(615px + (644px * 0.75));
+    }
+    .height-responsive {
+        height: calc(644px * 0.75);
     }
 }
 
@@ -152,10 +131,12 @@ box-shadow:
     .responsive-div-details {
         transform: scale(0.87);
     }
-    
     .responsive-div {
         max-width: calc(1631.97px * 0.87);
-        max-height: calc(615px + 644px * 0.87);
+        max-height: calc(615px + (644px * 0.87));
+    }
+    .height-responsive {
+        height: calc(644px * 0.87);
     }
 }
 
@@ -166,6 +147,9 @@ box-shadow:
     .responsive-div {
         max-width: calc(1631.97px);
         max-height: calc(615px + 644px);
+    }
+    .height-responsive {
+        height: 644px;
     }
 }
 
