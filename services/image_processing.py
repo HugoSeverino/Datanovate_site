@@ -7,27 +7,38 @@ def encoded_to_array(encoded: str) -> np.ndarray:
 
     image_data = base64.b64decode(encoded)
     img = Image.open(BytesIO(image_data))
-    img.save("static/img/chiffre.png")
     img = img.resize((28,28), Image.NEAREST)
     img = img.convert("1")
-    img.save("static/img/chiffre_norm.png")
 
     enlarged_image = resize_scale(img, 5)
-    enlarged_image.save("static/img/enlarged_chiffre_norm.png")
+    
+    buffered = BytesIO()
+    enlarged_image.save(buffered, format="PNG")
+    enlarged_base64 = base64.b64encode(buffered.getvalue()).decode('utf-8')
 
     np_img = np.array(img, dtype=np.float32)
     
     np_img = np_img.reshape(1, 28, 28, 1)
     
-    return np_img
+    return np_img, enlarged_base64
 
 
 
-def save_from_array(image: np.ndarray, file: str, scale_factor: int = 3) -> None:
+def array_to_base64(image: np.ndarray, scale_factor: int = 3) -> None:
+    # Conversion en Image pour redimensionnement
 
     img = Image.fromarray(image, mode="L")
     enlarged_image = resize_scale(img, scale_factor)
-    enlarged_image.save("static/img/" + file)
+    
+
+    buffered = BytesIO() # Crée un "fichier temporaire" vide en mémoire
+    enlarged_image.save(buffered, format="PNG") # sauvegarde l'image dans ce dernier sous format png
+    enlarged_base64 = base64.b64encode(buffered.getvalue()).decode('utf-8') # lit l'image png, l'encode en base64_str pour json
+
+    return enlarged_base64
+
+
+
 
 
 def resize_scale(img: Image, scale_factor: int) -> Image:
