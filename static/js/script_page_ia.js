@@ -104,12 +104,12 @@ function sendDrawing() {
             text = "Chiffre " + i + " : " + Math.round(data.predict_probas[i] * 100 * 100)/100 + "%"; 
             document.getElementById("li_" + i).innerText = text;
         }
-        time = new Date().getTime();
-        document.getElementById("image").src = "../static/img/enlarged_chiffre_norm.png?timestamp=" + time; // timestamp pour l'actualisation automatique de l'image
-        document.getElementById("after_reshape").src = "../static/img/after_reshape.png?timestamp=" + time;
-        document.getElementById("conv_1").src = "../static/img/first_conv_pool.png?timestamp=" + time;
-        document.getElementById("conv_2").src = "../static/img/second_conv_pool.png?timestamp=" + time;
-        document.getElementById("conv_3").src = "../static/img/third_conv_pool.png?timestamp=" + time;
+        
+        document.getElementById("image").src = "data:image/png;base64," + data.images.enlarged; 
+        document.getElementById("after_reshape").src = "data:image/png;base64," + data.images.after_reshape;
+        document.getElementById("conv_1").src = "data:image/png;base64," + data.images.first_conv_pool;
+        document.getElementById("conv_2").src = "data:image/png;base64," + data.images.second_conv_pool;
+        document.getElementById("conv_3").src = "data:image/png;base64," + data.images.third_conv_pool;
         if (drawing) {
             sendDrawing();
         }

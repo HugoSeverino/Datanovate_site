@@ -65,18 +65,28 @@ def save_drawing():
     _, encoded = data.split(",", 1)
 
     # Décoder l'image base64
-    np_img = img_p.encoded_to_array(encoded)
+    np_img, enlarged_base64 = img_p.encoded_to_array(encoded)
     
     predict, predict_probas = md.predict(np_img)
 
     other_outputs = md.predict_reshape(np_img)
 
-    img_p.save_from_array(other_outputs[0][0][1], "first_conv_pool.png", 5)
-    img_p.save_from_array(other_outputs[1][0][1], "second_conv_pool.png", 5)
-    img_p.save_from_array(other_outputs[2][0][1], "third_conv_pool.png", 5)
-    img_p.save_from_array(other_outputs[3][0], "after_reshape.png")
+    first_conv_pool = img_p.array_to_base64(other_outputs[0][0][1], 5)
+    second_conv_pool = img_p.array_to_base64(other_outputs[1][0][1], 5)
+    third_conv_pool = img_p.array_to_base64(other_outputs[2][0][1], 5)
+    after_reshape = img_p.array_to_base64(other_outputs[3][0])
 
-    return jsonify({'message': '/static/img/chiffre.png', 'predict': int(predict), 'predict_probas': predict_probas.tolist()})
+    return jsonify({'message': '/static/img/chiffre.png', 
+                    'predict': int(predict), 
+                    'predict_probas': predict_probas.tolist(),
+                    'images': {
+                        'enlarged': enlarged_base64,
+                        'first_conv_pool': first_conv_pool,
+                        'second_conv_pool': second_conv_pool,
+                        'third_conv_pool': third_conv_pool,
+                        'after_reshape': after_reshape
+                    }
+                })
 
 @app.route('/<page>/')
 def render_page(page):
