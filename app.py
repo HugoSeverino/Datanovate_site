@@ -36,31 +36,31 @@ def webhook():
 
     try:
             # Chemins dynamiques vers les fichiers ONNX dans le dossier /models relatif à app.py
-    MODEL_DIR = os.path.join(os.path.dirname(__file__), "models")
-    MODEL_PATH = os.path.join(MODEL_DIR, "model.onnx")
-    OTHER_MODEL_PATH = os.path.join(MODEL_DIR, "other_output_model.onnx")
+        MODEL_DIR = os.path.join(os.path.dirname(__file__), "models")
+        MODEL_PATH = os.path.join(MODEL_DIR, "model.onnx")
+        OTHER_MODEL_PATH = os.path.join(MODEL_DIR, "other_output_model.onnx")
+        
+        with open(MODEL_PATH, "rb") as f1:
+            fcntl.flock(f1, fcntl.LOCK_EX)
+            with open(OTHER_MODEL_PATH, "rb") as f2:
+                fcntl.flock(f2, fcntl.LOCK_EX)
+        
+                # 2. Git pull
+                result_git = subprocess.run(
+                    ['/usr/bin/git', 'pull'],
+                    cwd='/root/Datanovate_site',
+                    capture_output=True, text=True
+                )
+                if result_git.returncode != 0:
+                    return f"Erreur Git : {result_git.stderr}", 500
+        
+                # 3. Corriger les permissions
+                subprocess.run(["chmod", "644", MODEL_PATH])
+                subprocess.run(["chmod", "644", OTHER_MODEL_PATH])
     
-    with open(MODEL_PATH, "rb") as f1:
-        fcntl.flock(f1, fcntl.LOCK_EX)
-        with open(OTHER_MODEL_PATH, "rb") as f2:
-            fcntl.flock(f2, fcntl.LOCK_EX)
-    
-            # 2. Git pull
-            result_git = subprocess.run(
-                ['/usr/bin/git', 'pull'],
-                cwd='/root/Datanovate_site',
-                capture_output=True, text=True
-            )
-            if result_git.returncode != 0:
-                return f"Erreur Git : {result_git.stderr}", 500
-    
-            # 3. Corriger les permissions
-            subprocess.run(["chmod", "644", MODEL_PATH])
-            subprocess.run(["chmod", "644", OTHER_MODEL_PATH])
-
-        # 4. Redémarrage
-        subprocess.Popen(['/root/Datanovate_site/restart_service.sh'])
-        return 'Mise à jour effectuée et service redémarré', 200
+            # 4. Redémarrage
+            subprocess.Popen(['/root/Datanovate_site/restart_service.sh'])
+            return 'Mise à jour effectuée et service redémarré', 200
     except Exception as e:
         print(f"Erreur lors de la mise à jour : {e}")
         return f"Erreur lors de la mise à jour : {e}", 500
