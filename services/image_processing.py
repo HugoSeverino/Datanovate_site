@@ -11,7 +11,7 @@ def encoded_to_array(encoded: str) -> np.ndarray:
 
     # Conversion en numpy array + normalisation
     np_img = np.array(img, dtype=np.float32) / 255.0
-    np_img = np_img.reshape(1, 1, 28, 28)  # channel first, comme MNIST/PyTorch
+    np_img = np_img.reshape(1, 28, 28, 1)
 
     # Image agrandie pour l'affichage
     enlarged_image = resize_scale(img, 5)
