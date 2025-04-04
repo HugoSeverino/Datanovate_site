@@ -11,7 +11,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 MODEL_RESHAPE_PATH = os.path.join(BASE_DIR, "other_output_model.onnx")  
 options = ort.SessionOptions()
-options.optimized_model_filepath = MODEL_RESHAPE_PATH
+#options.optimized_model_filepath = MODEL_RESHAPE_PATH
 other_output_model = ort.InferenceSession(MODEL_RESHAPE_PATH, sess_options=options) # sess_options enlève un warning inutile
 
 
