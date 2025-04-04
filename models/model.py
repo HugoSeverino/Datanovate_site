@@ -19,7 +19,9 @@ MODEL_PATH = os.path.join(BASE_DIR, "model.onnx")
 model = ort.InferenceSession(MODEL_PATH)
 
 input_name = model.get_inputs()[0].name
-
+print("DEBUG - Input name:", input_name)
+print("DEBUG - Model input shape:", model.get_inputs()[0].shape)
+print("DEBUG - Model input type:", model.get_inputs()[0].type)
 
 # Renvoie la prediction + les probabilités
 def predict(img: np.ndarray) -> Tuple[np.uint8, np.ndarray]:
