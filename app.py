@@ -30,21 +30,21 @@ def verify_signature(request):
 
 @app.route('/update-server', methods=['POST'])
 def webhook():
-    # Vérifie la signature pour sécuriser l'accès
     if not verify_signature(request):
         return 'Accès non autorisé', 403
 
     try:
-            # Chemins dynamiques vers les fichiers ONNX dans le dossier /models relatif à app.py
+        # Chemins vers les fichiers ONNX
         MODEL_DIR = os.path.join(os.path.dirname(__file__), "models")
         MODEL_PATH = os.path.join(MODEL_DIR, "model.onnx")
         OTHER_MODEL_PATH = os.path.join(MODEL_DIR, "other_output_model.onnx")
-        
+
+        # 1. Verrouiller les fichiers
         with open(MODEL_PATH, "rb") as f1:
             fcntl.flock(f1, fcntl.LOCK_EX)
             with open(OTHER_MODEL_PATH, "rb") as f2:
                 fcntl.flock(f2, fcntl.LOCK_EX)
-        
+
                 # 2. Git pull
                 result_git = subprocess.run(
                     ['/usr/bin/git', 'pull'],
@@ -53,14 +53,15 @@ def webhook():
                 )
                 if result_git.returncode != 0:
                     return f"Erreur Git : {result_git.stderr}", 500
-        
-                # 3. Corriger les permissions
+
+                # 3. Changer les permissions
                 subprocess.run(["chmod", "644", MODEL_PATH])
                 subprocess.run(["chmod", "644", OTHER_MODEL_PATH])
-    
-            # 4. Redémarrage
-            subprocess.Popen(['/root/Datanovate_site/restart_service.sh'])
-            return 'Mise à jour effectuée et service redémarré', 200
+
+        # 4. Redémarrer le service
+        subprocess.Popen(['/root/Datanovate_site/restart_service.sh'])
+        return 'Mise à jour effectuée et service redémarré', 200
+
     except Exception as e:
         print(f"Erreur lors de la mise à jour : {e}")
         return f"Erreur lors de la mise à jour : {e}", 500
