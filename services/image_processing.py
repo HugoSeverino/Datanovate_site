@@ -8,7 +8,9 @@ def encoded_to_array(encoded: str) -> np.ndarray:
     image_data = base64.b64decode(encoded)
     img = Image.open(BytesIO(image_data))
     img = img.resize((28,28), Image.NEAREST)
-    img = img.convert("1")
+    img = img.convert("L")  
+    np_img = np.array(img, dtype=np.float32) / 255.0
+    np_img = np_img.reshape(1, 1, 28, 28)
 
     enlarged_image = resize_scale(img, 5)
     
