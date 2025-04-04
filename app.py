@@ -6,6 +6,7 @@ from secret import GITHUB_TOKEN
 import os
 import models.model as md
 import services.image_processing as img_p
+import fcntl
 
 app = Flask(__name__)
 
@@ -34,17 +35,26 @@ def webhook():
         return 'Accès non autorisé', 403
 
     try:
-        # Exécute `git pull` si la vérification est réussie
-        result_git = subprocess.run(
-            ['/usr/bin/git', 'pull'], 
-            cwd='/root/Datanovate_site', 
-            capture_output=True, text=True
-        )
-        print("Résultat de git pull :", result_git.stdout)
-        if result_git.returncode != 0:
-            return f"Erreur lors de git pull : {result_git.stderr}", 500
+        # 1. Verrouiller le fichier ONNX avant toute opération
+        with open("/models/model.onnx", "rb") as f1:
+            fcntl.flock(f1, fcntl.LOCK_EX)
+            with open("/models/other_output_model.onnx", "rb") as f2:
+                fcntl.flock(f2, fcntl.LOCK_EX)
 
-        # Redémarre l'application avec un script différé
+                # 2. Git pull avec vérification des erreurs
+                result_git = subprocess.run(
+                    ['/usr/bin/git', 'pull'], 
+                    cwd='/root/Datanovate_site', 
+                    capture_output=True, text=True
+                )
+                if result_git.returncode != 0:
+                    return f"Erreur Git : {result_git.stderr}", 500
+
+                # 3. Corriger les permissions
+                subprocess.run(["chmod", "644", "/models/model.onnx"])
+                subprocess.run(["chmod", "644", "/models/other_output_model.onnx"])
+
+        # 4. Redémarrage
         subprocess.Popen(['/root/Datanovate_site/restart_service.sh'])
         return 'Mise à jour effectuée et service redémarré', 200
     except Exception as e:
@@ -76,8 +86,7 @@ def save_drawing():
     third_conv_pool = img_p.array_to_base64(other_outputs[2][0][1], 5)
     after_reshape = img_p.array_to_base64(other_outputs[3][0])
 
-    return jsonify({'message': '/static/img/chiffre.png', 
-                    'predict': int(predict), 
+    return jsonify({'predict': int(predict), 
                     'predict_probas': predict_probas.tolist(),
                     'images': {
                         'enlarged': enlarged_base64,

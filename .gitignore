@@ -1,6 +1,8 @@
 secret.py
 myenv/
 _pycache_/
+models/_pycache_/
+services/_pycache_/
 venv/
 env_portable/
 .venv/
