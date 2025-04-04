@@ -19,6 +19,12 @@ def encoded_to_array(encoded: str) -> np.ndarray:
     np_img = np.array(img, dtype=np.float32)
     
     np_img = np_img.reshape(1, 28, 28, 1)
+
+    print("DEBUG - Image shape :", np_img.shape)
+    print("DEBUG - Image dtype :", np_img.dtype)
+    print("DEBUG - Min pixel value :", np.min(np_img))
+    print("DEBUG - Max pixel value :", np.max(np_img))
+    print("DEBUG - Mean pixel value :", np.mean(np_img))
     
     return np_img, enlarged_base64
 
