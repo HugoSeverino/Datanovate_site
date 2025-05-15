@@ -4,7 +4,7 @@ let drawing = false;
 let autoSendInterval = null;
 
 ctx.fillStyle = "rgba(255, 255, 255, 1)";
-ctx.fillRect(0, 0, canvas.width, canvas.height); // Fond blanc
+ctx.fillRect(0, 0, canvas.width, canvas.height); // Fond blanc juvbju
 
 // Pour pc
 canvas.addEventListener("mousedown", () => {
